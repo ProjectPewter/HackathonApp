@@ -1,0 +1,20 @@
+{
+  "name": "hackathonapp",
+  "version": "1.0.0",
+  "description": "hackaton ideas",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProjectPewter/HackathonApp.git"
+  },
+  "author": "Logan, Alex, Catherine, Todd, Rich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProjectPewter/HackathonApp/issues"
+  },
+  "homepage": "https://github.com/ProjectPewter/HackathonApp#readme"
+}
