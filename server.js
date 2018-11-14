@@ -1,23 +1,24 @@
-// var express = require("express");
+var mysql = require("mysql")
 
-// // Sets up the Express App
-// // =============================================================
-// var app = express();
-// var PORT = process.env.PORT || 8080;
+if (process.env.JAWSDB_URL) {
+  var connection = mysql.createConnection(process.env.JAWSDB_URL)
+} else {
+  var connection = mysql.createConnection({
+    host: "localhost",
+    port: 8889,
+    user: "root",
+    password: "root",
+    database: "hackathon_db"
+  });
+}
 
-// // Requiring our models for syncing
-// var db = require("./models");
-
-// // Sets up the Express app to handle data parsing
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-
-// // Syncing our sequelize models and then starting our express app
-// db.sequelize.sync({ force: true }).then(function() {
-//   app.listen(PORT, function() {
-//     console.log("App listening on PORT " + PORT);
-//   });
-// });
+connection.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+  console.log("connected as id " + connection.threadId);
+});
 
 var express = require("express");
 var bodyParser = require("body-parser");
