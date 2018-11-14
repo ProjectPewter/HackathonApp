@@ -8,7 +8,21 @@ router.get('/api/ideas', function (req, res) {
 
 router.post('/api/ideas', function (req, res) {
   ideas.push(req.body)
-  connection.query("INSERT INTO ideas (name, details, tech, difficulty) VALUES (?, ?, ?, ?)")
+  var projectName = req.body.project
+  var projectDetails = req.body.details
+  var projectTech = req.body.tech
+  var projectDiff = req.body.difficulty
+  connection.query("INSERT INTO ideas (name, details, tech, difficulty) VALUES (?, ?, ?, ?)",
+    {
+      projectName,
+      projectDetails,
+      projectTech,
+      projectDiff
+    }, function (err, result) {
+      if (err) throw err
+
+      
+    })
 })
 
 module.exports = router
