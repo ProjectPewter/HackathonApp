@@ -1,6 +1,7 @@
 var express = require('express')
 var ideas = require('./../data/ideas')
 var router = express.Router()
+var connection = require('./../server')
 
 router.get('/api/ideas', function (req, res) {
   res.json(ideas);
@@ -12,16 +13,17 @@ router.post('/api/ideas', function (req, res) {
   var projectDetails = req.body.details
   var projectTech = req.body.tech
   var projectDiff = req.body.difficulty
-  connection.query("INSERT INTO ideas (name, details, tech, difficulty) VALUES (?, ?, ?, ?)",
+  connection.query("INSERT INTO ideas SET ?",
     {
-      projectName,
-      projectDetails,
-      projectTech,
-      projectDiff
-    }, function (err, result) {
+      name: projectName,
+      details: projectDetails,
+      tech: projectTech,
+      difficulty: projectDiff
+    }, 
+    function (err, result) {
       if (err) throw err
 
-      
+      console.log(result.affectedRows)
     })
 })
 
