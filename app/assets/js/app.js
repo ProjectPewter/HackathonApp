@@ -37,3 +37,41 @@ console.log("click");
 event.preventDefault();
 $("#myModal").modal();
 });
+
+var makeCard = function (idea) {
+    var colDiv = $("<div>")
+    var cardDiv = $("<div>")
+    var head = $("<h5>")
+    var desc = $("<p>")
+    var read = $("<a>")
+    var pin = $("<a>")
+
+    colDiv.addClass("col-lg-3")
+    .addClass("col-md-4")
+    .addClass("col-xs-6")
+
+    cardDiv.addClass("card-desc")
+
+    read.attr("href", idea.link)
+    .addClass("read-card")
+    .attr("data-toggle", "modal")
+    .attr("data-target", "#myModal")
+    .text("Read")
+
+    pin.attr("href", idea.link)
+    .addClass("pin-card")
+    .text("Pin")
+
+    head.text(idea.name)
+
+    desc.text(idea.details)
+
+    cardDiv.append(head)
+    .append(desc)
+    .append(read)
+    .append(pin)
+
+    colDiv.append(cardDiv)
+
+    $("#cardHolder").append(colDiv)
+}
