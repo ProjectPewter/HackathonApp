@@ -9,6 +9,6 @@ CREATE TABLE ideas (
   details VARCHAR(300),
   tech VARCHAR(300),
   difficulty VARCHAR(30),
-  karma INT,
+  rating INT,
   PRIMARY KEY (id)
 );
