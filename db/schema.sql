@@ -9,6 +9,7 @@ CREATE TABLE ideas (
  details VARCHAR(300),
  tech VARCHAR(300),
  difficulty INT,
+ created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  votes INT DEFAULT 0,
  PRIMARY KEY (id)
 );

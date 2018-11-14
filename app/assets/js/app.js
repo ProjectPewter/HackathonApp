@@ -1,8 +1,18 @@
+var connection = require("./../../../server")
+
+connection.query("SELECT * FROM ideas;", function (err, data) {
+    if (err) {
+        return res.status(500).end();
+    }
+
+    console.log(data)
+});
+
 // Get the modal
 var modal = document.getElementById('id01');
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
@@ -27,15 +37,15 @@ function filterFunction() {
     }
 }
 
-$(document).on("click", ".close", function(){
+$(document).on("click", ".close", function () {
     $("#myModal").hide();
 })
 
 // // Activate submit button
-$("#read-card").on("click", function(event) {
-console.log("click");
-event.preventDefault();
-$("#myModal").modal();
+$("#read-card").on("click", function (event) {
+    console.log("click");
+    event.preventDefault();
+    $("#myModal").modal();
 });
 
 // Function that makes the idea cards
@@ -48,29 +58,29 @@ var makeCard = function (idea) {
     var pin = $("<a>")
 
     colDiv.addClass("col-lg-3")
-    .addClass("col-md-4")
-    .addClass("col-xs-6")
+        .addClass("col-md-4")
+        .addClass("col-xs-6")
 
     cardDiv.addClass("card-desc")
 
     read.attr("href", idea.link)
-    .addClass("read-card")
-    .attr("data-toggle", "modal")
-    .attr("data-target", "#myModal")
-    .text("Read")
+        .addClass("read-card")
+        .attr("data-toggle", "modal")
+        .attr("data-target", "#myModal")
+        .text("Read")
 
     pin.attr("href", idea.link)
-    .addClass("pin-card")
-    .text("Pin")
+        .addClass("pin-card")
+        .text("Pin")
 
     head.text(idea.name)
 
     desc.text(idea.details)
 
     cardDiv.append(head)
-    .append(desc)
-    .append(read)
-    .append(pin)
+        .append(desc)
+        .append(read)
+        .append(pin)
 
     colDiv.append(cardDiv)
 
@@ -125,3 +135,4 @@ $("#submit").on("click", function (event) {
         alert("Please fill out all fields before submitting!");
     }
 });
+
