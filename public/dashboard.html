@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dash Board </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="css/dash.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+  <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Hackathon Generator</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="document.getElementById('id01').style.display='block'">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row profile">
+      <div class="col-md-3">
+        <div class="profile-sidebar">
+          <!-- SIDEBAR USERPIC -->
+          <div class="col-md-12">
+            <div class="profile-userpic">
+              <img src="css/image/goodidea.jpg" class="auth-image" alt="Your Name" height="50%" width="50%">
+            </div>
+          </div>
+          <!-- END SIDEBAR USERPIC -->
+          <!-- SIDEBAR USER TITLE -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              HackathonAppProfile
+            </div>
+            <div class="profile-usertitle-job">
+              ProjectWork
+            </div>
+          </div>
+
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <a href="#" class="read-card">Create</a>
+            <a href="#" class="pin-card">Pin</a>
+            <!--<button type="button" class="btn btn-success btn-sm">Save</button>
+                                <button type="button" class="btn btn-danger btn-sm">Pin</button>-->
+          </div>
+          <!--END SIDEBAR BUTTONS -->
+          <!-- SIDEBAR MENU -->
+
+          <div class="profile-usermenu">
+            <ul class="nav">
+              <li class="active">
+                <a href="#">
+                  <i class="glyphicon glyphicon-home"></i>Overview</a>
+              </li>
+              <!--<li>
+                                        <a href="#">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                        Pin </a>
+                                    </li>-->
+              <li>
+                <a href="#">
+                  <i class="glyphicon glyphicon-ok"></i>Tasks</a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="glyphicon glyphicon-flag"></i>Help</a>
+              </li>
+            </ul>
+          </div>
+
+          <!--END MENU-->
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="profile-content">
+          Save Pin idea goes here!
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <!-- Footer -->
+  <footer class="footer">
+    <div>
+      <div>
+        <p>Copyright &copy; Your Website 2018</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
