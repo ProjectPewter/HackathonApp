@@ -1,12 +1,46 @@
-var connection = require("./../../../server")
 
-connection.query("SELECT * FROM ideas;", function (err, data) {
-    if (err) {
-        return res.status(500).end();
+
+function getPosts(category) {
+    var categoryString = category || "";
+    if (categoryString) {
+        categoryString = "/category/" + categoryString;
     }
+    $.get("/api/ideas" + categoryString, function (data) {
+        console.log("Posts", data);
+        posts = data;
+        if (!posts || !posts.length) {
+            displayEmpty();
+        }
+        else {
+            initializeRows();
+        }
+    });
+}
 
-    console.log(data)
-});
+// Getting the initial list of posts
+getPosts();
+// InitializeRows handles appending all of our constructed post HTML inside
+// blogContainer
+function initializeRows() {
+    $("#cardHolder").empty();
+    for (var i = 0; i < posts.length; i++) {
+        makeCard(posts[i])
+    }
+}
+// This function displays a message when there are no posts
+function displayEmpty() {
+    $("#cardHolder").empty();
+    var messageH2 = $("<h2>");
+    messageH2.css({ "text-align": "center", "margin-top": "50px" });
+    messageH2.html("No posts yet for this category, navigate <a href='/cms'>here</a> in order to create a new post.");
+    $("#cardHolder").append(messageH2);
+}
+
+// This function handles reloading new posts when the category changes
+function handleCategoryChange() {
+    var newPostCategory = $(this).val();
+    getPosts(newPostCategory);
+}
 
 // Get the modal
 var modal = document.getElementById('id01');
@@ -135,4 +169,3 @@ $("#submit").on("click", function (event) {
         alert("Please fill out all fields before submitting!");
     }
 });
-

@@ -1,10 +1,14 @@
 var express = require('express')
-var ideas = require('./../data/ideas')
+var ideas = require('../data/ideas')
 var router = express.Router()
-var connection = require('./../server')
+var connection = require('../server')
 
 router.get('/api/ideas', function (req, res) {
-  res.json(ideas);
+  connection.query("SELECT * FROM ideas", {}, function (err, result) {
+    if (err) throw err
+
+    res.json(result)
+  })
 })
 
 router.post('/api/ideas', function (req, res) {
