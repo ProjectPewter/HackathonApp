@@ -1,7 +1,7 @@
 {
   "name": "hackathonapp",
   "version": "1.0.0",
-  "description": "hackaton ideas",
+  "description": "ideas for a hackathon!",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,10 +11,22 @@
     "type": "git",
     "url": "git+https://github.com/ProjectPewter/HackathonApp.git"
   },
-  "author": "Logan, Alex, Catherine, Todd, Rich",
+  "author": "Logan, Alex, Catherine, Rich, and Todd",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ProjectPewter/HackathonApp/issues"
   },
-  "homepage": "https://github.com/ProjectPewter/HackathonApp#readme"
+  "homepage": "https://github.com/ProjectPewter/HackathonApp#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-mysql-session": "^2.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.0",
+    "mysql": "^2.16.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  }
 }
