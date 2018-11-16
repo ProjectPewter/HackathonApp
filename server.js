@@ -5,7 +5,7 @@ if (process.env.JAWSDB_URL) {
 } else {
   var connection = mysql.createConnection({
     host: "localhost",
-    port: 8889,
+    port: 3306,
     user: "root",
     password: "root",
     database: "hackathon_db"
@@ -19,6 +19,8 @@ connection.connect(function (err) {
   }
   console.log("connected as id " + connection.threadId);
 });
+
+module.exports = connection
 
 var express = require("express");
 var bodyParser = require("body-parser");
@@ -37,9 +39,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Import routes and give the server access to them.
-var routes = require("./controllers/controller.js");
+var api = require("./routing/apiRoutes");
+var html = require("./routing/htmlRoutes")
 
-app.use(routes);
+app.use(html);
+app.use(api);
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
