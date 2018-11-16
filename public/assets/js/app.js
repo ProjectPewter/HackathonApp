@@ -2,9 +2,6 @@
 
 function getPosts(category) {
     var categoryString = category || "";
-    if (categoryString) {
-        categoryString = "/category/" + categoryString;
-    }
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
         posts = data;
@@ -32,7 +29,7 @@ function displayEmpty() {
     $("#cardHolder").empty();
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
-    messageH2.html("No posts yet for this category, navigate <a href='/cms'>here</a> in order to create a new post.");
+    messageH2.html("No posts yet for this category, navigate <a href='/dashboard'>here</a> in order to create a new post.");
     $("#cardHolder").append(messageH2);
 }
 
@@ -52,10 +49,12 @@ window.onclick = function (event) {
     }
 }
 
+// Modal things
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
+//For the modal
 function filterFunction() {
     var input, filter, ul, li, a, i;
     input = document.getElementById("myInput");
@@ -75,7 +74,7 @@ $(document).on("click", ".close", function () {
     $("#myModal").hide();
 })
 
-// // Activate submit button
+// // Modal stuff
 $("#read-card").on("click", function (event) {
     console.log("click");
     event.preventDefault();
@@ -122,50 +121,100 @@ var makeCard = function (idea) {
 }
 
 // Capture the form inputs
+// $("#submit").on("click", function (event) {
+//     event.preventDefault();
+
+//     // Form validation
+//     function validateForm() {
+//         var isValid = true;
+//         $(".form-control").each(function () {
+//             if ($(this).val() === "") {
+//                 isValid = false;
+//             }
+//         });
+
+//         $(".chosen-select").each(function () {
+
+//             if ($(this).val() === "") {
+//                 isValid = false;
+//             }
+//         });
+//         return isValid;
+//     }
+
+//     // If all required fields are filled
+//     if (validateForm()) {
+//         // Create an object for the user"s data
+//         var userData = {
+//             name: $("#name").val(),
+//             details: $("#photo").val(),
+//             tech: 3,
+//             difficulty: 4
+
+//         };
+
+//         // AJAX post the data to the friends API.
+//         $.post("/api/friends", userData, function (data) {
+
+//             // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+//             $("#match-name").text(data.name);
+//             $("#match-img").attr("src", data.photo);
+
+//             // Show the modal with the best match
+//             $("#results-modal").modal("toggle");
+
+//         });
+//     } else {
+//         alert("Please fill out all fields before submitting!");
+//     }
+// });
+
 $("#submit").on("click", function (event) {
+    console.log("click");
     event.preventDefault();
-
-    // Form validation
-    function validateForm() {
-        var isValid = true;
-        $(".form-control").each(function () {
-            if ($(this).val() === "") {
-                isValid = false;
-            }
-        });
-
-        $(".chosen-select").each(function () {
-
-            if ($(this).val() === "") {
-                isValid = false;
-            }
-        });
-        return isValid;
-    }
-
-    // If all required fields are filled
-    if (validateForm()) {
-        // Create an object for the user"s data
-        var userData = {
-            name: $("#name").val(),
-            details: $("#photo").val(),
-            tech: 3,
-            difficulty: 4
-
-        };
-
-        // AJAX post the data to the friends API.
-        $.post("/api/friends", userData, function (data) {
-
-            // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-            $("#match-name").text(data.name);
-            $("#match-img").attr("src", data.photo);
-
-            // Show the modal with the best match
-            $("#results-modal").modal("toggle");
-
-        });
-    } else {
-        alert("Please fill out all fields before submitting!");
-    }
+    // Gather user inputs
+    var newIdea = {
+        ideaName: $("#idea-name-input").val().trim(),
+        details: $("#details-input").val().trim(),
+        tech: $("#tech-input").val().trim(),
+        difficulty: $("#level-input").val().trim()
+    };
+    $.post("/api/ideas", newIdea, function (data) {
+        console.log(data)
+    })
+    console.log("click");
+    $("#submitModal").hide();
+    $("#successModal").modal();
 });
+
+// $("#submit").on("click", function (event) {
+//     console.log("click");
+//     event.preventDefault();
+//     $("#submitModal").hide();
+//     $("#successModal").modal();
+// });
+$(document).on("click", ".close-success", function () {
+    $("#successModal").hide();
+    $(".modal-backdrop").hide();
+})
+
+
+$(document).ready(function () {
+
+
+    $("#recent").on("click", function () {
+        getPosts("/recent")
+    })
+    $("#votes").on("click", function () {
+        getPosts("/votes")
+    })
+    $("#easy").on("click", function () {
+        getPosts("/difficulty/1")
+    })
+    $("#medium").on("click", function () {
+        getPosts("/difficulty/2")
+    })
+    $("#hard").on("click", function () {
+        getPosts("/difficulty/3")
+    })
+})

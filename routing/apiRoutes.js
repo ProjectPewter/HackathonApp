@@ -19,7 +19,7 @@ router.get('/api/ideas/votes', function (req, res) {
   })
 })
 
-router.get('/api/ideas/newest', function (req, res) {
+router.get('/api/ideas/recent', function (req, res) {
   connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY created DESC", {}, function (err, result){
     if (err) throw err
 
@@ -27,7 +27,7 @@ router.get('/api/ideas/newest', function (req, res) {
   })
 })
 
-router.get('api/ideas/random', function (req, res) {
+router.get('/api/ideas/random', function (req, res) {
   connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY RAND() LIMIT 1", {}, function (err, result){
     if (err) throw err
 
@@ -35,8 +35,9 @@ router.get('api/ideas/random', function (req, res) {
   })
 })
 
-router.get('api/ideas/difficulty/:difficulty', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas WHERE difficulty = ?", { difficulty }, function (err, result) {
+router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
+  var diff = req.params.difficulty
+  connection.query("SELECT name, details, tech, difficulty FROM ideas WHERE ?", {difficulty: diff}, function (err, result) {
     if (err) throw err
 
     res.json(result)
@@ -44,8 +45,7 @@ router.get('api/ideas/difficulty/:difficulty', function (req, res) {
 })
 
 router.post('/api/ideas', function (req, res) {
-  ideas.push(req.body)
-  var projectName = req.body.project
+  var projectName = req.body.ideaName
   var projectDetails = req.body.details
   var projectTech = req.body.tech
   var projectDiff = req.body.difficulty
