@@ -10,6 +10,16 @@ router.get('/api/ideas', function (req, res) {
   })
 })
 
+router.get('/api/ideas/:id', function (req, res) {
+  connection.query("SELECT * FROM ideas WHERE ?", {
+    id: req.params.id
+  }, function (err, result) {
+    if (err) throw err
+
+    res.json(result)
+  })
+})
+
 router.get('/api/ideas/votes', function (req, res) {
   connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY votes DESC", {}, function (err, result){
     if (err) throw err
