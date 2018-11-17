@@ -3,7 +3,8 @@ var PORT = process.env.PORT || 8080
 var app = express()
 var bodyParser = require("body-parser")
 var cookieParser = require("cookie-parser")
-var htmlRoutes = require("./routing/htmlRoutes")
+var html = require("./routing/htmlRoutes")
+var api = require("./routing/apiRoutes")
 var path = require("path")
 
 // Authentication Routes
@@ -68,7 +69,8 @@ passport.use(new LocalStrategy(
   }
 ))
 
-app.use(htmlRoutes);
+app.use(html);
+app.use(api)
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
