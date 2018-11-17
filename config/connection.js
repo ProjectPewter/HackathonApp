@@ -8,7 +8,7 @@ var mysql = require("mysql")
     port: 3306,
     user: "root",
     password: "root",
-    database: "users_db"
+    database: "hackathon_db"
   });
 // }
 
