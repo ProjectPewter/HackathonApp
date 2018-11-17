@@ -89,6 +89,9 @@ var makeCard = function (idea) {
     var desc = $("<p>")
     var read = $("<a>")
     var pin = $("<a>")
+    var tech = $("#")
+
+    tech.text(idea.tech)
 
     colDiv.addClass("col-lg-3")
         .addClass("col-md-4")

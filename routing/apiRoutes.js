@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var connection = require('../server')
+var connection = require('../config/connection')
 
 router.get('/api/ideas', function (req, res) {
   connection.query("SELECT * FROM ideas", {}, function (err, result) {
