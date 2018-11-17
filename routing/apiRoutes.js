@@ -54,6 +54,8 @@ router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
   })
 })
 
+
+
 router.post('/api/ideas', function (req, res) {
   var projectName = req.body.ideaName
   var projectDetails = req.body.details

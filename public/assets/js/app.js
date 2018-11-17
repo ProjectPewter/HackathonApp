@@ -139,11 +139,15 @@ $("body").on("click", "#submit", function (event) {
     }
     if (validateForm()) {
 
+        console.log($(".text-tags"))
+        console.log($(".text.tag"))
+        console.log($('.text-label'))
+        var techno = Array.from($('.text-tags .text-tag .text-label'), x => x.innerText)
 
         var newIdea = {
             ideaName: $("#idea-name-input").val().trim(),
             details: $("#details-input").val().trim(),
-            tech: $('.text-tags .text.tag .text-label').val(),
+            tech: techno.join(', '),
             difficulty: $("#level-input").val().trim()
         };
         $.post("/api/ideas", newIdea, function (data) {
@@ -478,15 +482,14 @@ var availableTags = [
     "Yorick",
     "Z shell",
 ];
-console.log($('#LanguagesTags'))
 $('#LanguagesTags').textext({
-plugins : 'autocomplete filter tags'
+    plugins: 'autocomplete filter tags'
 }).bind('getSuggestions', function (e, data) {
-textext = $(e.target).textext()[0]
-query = (data ? data.query : '') || ''
+    textext = $(e.target).textext()[0]
+    query = (data ? data.query : '') || ''
 
-$(this).trigger(
-    'setSuggestions',
-    { result : textext.itemManager().filter(availableTags, query) }
-);
+    $(this).trigger(
+        'setSuggestions',
+        { result: textext.itemManager().filter(availableTags, query) }
+    );
 })
