@@ -119,7 +119,8 @@ var makeCard = function (idea) {
         .addClass("pin-card")
         .text("Pin")
 
-    head.text(idea.name)
+    head.addClass("card-head")
+        .text(idea.name)
 
     desc.text(idea.details)
 
