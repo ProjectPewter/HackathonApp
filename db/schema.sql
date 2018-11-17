@@ -18,5 +18,11 @@ CREATE TABLE users (
    email VARCHAR(100) NOT NULL,
    username VARCHAR(15) NOT NULL,
    password BINARY(60),
+   pinnedTable VARCHAR(30),
    PRIMARY KEY(id)
+);
+
+CREATE TABLE pinned (
+  id INT,
+  pin int
 );

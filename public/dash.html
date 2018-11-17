@@ -23,8 +23,8 @@
 
 
   <!--autocomplete-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css"> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
@@ -100,37 +100,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="container">
-            <div class="row">
-                <div class="survey-questions">
-                    <div class="main-center">
-                        <h3>Create an idea.</h3>
-                            <div>
-                                <form action="/action_page.php">
-                                    Idea Name:<br>
-                                    <input type="text" name="ideaname" placeholder="Pizza store finder">
-                                    <br><br>
-                                    Details:<br>
-                                   <textarea placeholder="Include front end and back end functions."></textarea>                            
-                                    <br><br>
-                                    Technology:<br>
-                                    <textarea placeholder="Python, etc..."></textarea>  
-                                    <br><br>
-                                    Difficulty:<br>
-                                    <select id="level">
-                                    <option value="Easy">Easy</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Hard">Hard</option>
-                                    </select>
-                                    <br><br>
-                                    <input type="submit" value="Submit">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       </div>        -->
+
     <div class="modal fade" id="submitModal" role="dialog">
       <div class="modal-dialog">
 
@@ -144,25 +114,27 @@
             <div>
               <form class="idea-form" action="">
                 Idea Name:<br>
-                <input class="form-control" type="text" id="idea-name-input" name="ideaname" placeholder="Pizza store finder">
-                <br><br>
+                <input type="text" id="idea-name-input" name="ideaname" placeholder="Pizza store finder">
+                <br>
                 Details:<br>
-                <textarea class="form-control" id="details-input" placeholder="Include front end and back end functions."></textarea>
-                <br><br>
-                Technology:<br>
-                <div class="ui-widget">
-                  <input name="tags" type="text" id="tags">
-                  <p id="tags-go-here"></p>
+                <textarea id="details-input" placeholder="Include front end and back end functions."></textarea>
+                <br>
+                <div id="the-basics">
+                  Languages:<br>
+                  <div id="tmp" class="ui-widget">
+                    <textarea id="LanguagesTags" class="example" rows="1"></textarea>
+                    <p id="tags-go-here"></p>
+                  </div>
+                  <br>
+                  Difficulty:
+                  <select id="level">
+                    <option id="level-input" value="1">Easy</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Hard</option>
+                  </select>
+                  <br><br>
+                  <input type="submit" value="Create" id="submit">
                 </div>
-                <br><br>
-                Difficulty:<br>
-                <select class="select" id="level">
-                  <option id="level-input" value="1">Easy</option>
-                  <option value="2">Medium</option>
-                  <option value="3">Hard</option>
-                </select>
-                <br><br>
-                <input type="submit" value="Create" id="submit">
               </form>
             </div>
           </div>
@@ -188,6 +160,6 @@
       </div>
     </div>
 </body>
-<script src="./assets/js/app.js"></script>
+<!-- <script src="./assets/js/app.js"></script> -->
 
 </html>
