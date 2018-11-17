@@ -116,7 +116,7 @@ var makeCard = function (idea) {
 }
 
 
-$("#submit").on("click", function (event) {
+$("body").on("click", "#submit", function (event) {
     console.log("click");
     event.preventDefault();
     // Gather user inputs
@@ -142,7 +142,7 @@ $("#submit").on("click", function (event) {
         var newIdea = {
             ideaName: $("#idea-name-input").val().trim(),
             details: $("#details-input").val().trim(),
-            tech: $("#tech-input").val().trim(),
+            tech: $('.text-tags .text.tag .text-label').val(),
             difficulty: $("#level-input").val().trim()
         };
         $.post("/api/ideas", newIdea, function (data) {
@@ -150,7 +150,10 @@ $("#submit").on("click", function (event) {
         })
         console.log("click");
         $("#submitModal").hide();
-        $("#successModal").modal();
+        // $("#successModal").hide();
+        $("#successModal").show();
+
+        $(".modal-backdrop").hide();
     } else {
         alert("Please fill out all fields before submitting!");
     }
@@ -162,11 +165,6 @@ $("#submit").on("click", function (event) {
 //     $("#submitModal").hide();
 //     $("#successModal").modal();
 // });
-$(document).on("click", ".close-success", function () {
-    $("#successModal").hide();
-    $(".modal-backdrop").hide();
-})
-
 
 $(document).ready(function () {
 

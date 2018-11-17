@@ -247,3 +247,6 @@ textarea {
 #LanguagesTags {
 height: 50px;
 }
+.modal-content {
+  height: 550px;
+}
