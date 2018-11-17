@@ -89,9 +89,19 @@ var makeCard = function (idea) {
     var desc = $("<p>")
     var read = $("<a>")
     var pin = $("<a>")
-    var tech = $("#")
-
-    tech.text(idea.tech)
+    var projectName = $('#proj-name')
+    var projectDetails = $('#proj-details')
+    var projectTech = $('#proj-tech')
+    var projectLevel = $('#proj-level')
+    var difficultyConvert = {
+        1: "Easy",
+        2: "Medium",
+        3: "Hard"
+    }
+    projectName.text(idea.name)
+    projectDetails.text(idea.details)
+    projectTech.text(idea.tech)
+    projectLevel.text(difficultyConvert[idea.difficulty])
 
     colDiv.addClass("col-lg-3")
         .addClass("col-md-4")
