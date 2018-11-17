@@ -12,11 +12,11 @@ const { sanitizeBody } = require("express-validator/filter")
 router.get("/", function(req, res) {
     console.log(req.user)
     console.log(req.isAuthenticated())
-    if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, "../public/success.html"))
-    } else {
+    // if (req.isAuthenticated()) {
+    //     res.sendFile(path.join(__dirname, "../public/success.html"))
+    // } else {
         res.sendFile(path.join(__dirname, "../public/home.html"))
-    }
+    // }
 })
 
 router.post("/login", passport.authenticate(
