@@ -12,3 +12,11 @@ CREATE TABLE ideas (
   karma INT,
   PRIMARY KEY (id)
 );
+
+CREATE TABLE users (
+   id INT AUTO_INCREMENT NOT NULL,
+   email VARCHAR(100) NOT NULL,
+   username VARCHAR(15) NOT NULL,
+   password BINARY(60),
+   PRIMARY KEY(id)
+);
