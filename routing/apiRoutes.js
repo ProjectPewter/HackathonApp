@@ -1,5 +1,4 @@
 var express = require('express')
-var ideas = require('../data/ideas')
 var router = express.Router()
 var connection = require('../server')
 
