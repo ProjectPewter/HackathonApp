@@ -4,6 +4,7 @@ const router = express.Router()
 const connection = require("../config/connection.js")
 const bcrypt = require('bcrypt')
 const saltRounds = 10
+const cookieParser = require("cookie-parser")
 const passport = require("passport")
 const { check, validationResult } = require("express-validator/check")
 const { sanitizeBody } = require("express-validator/filter")
@@ -11,7 +12,11 @@ const { sanitizeBody } = require("express-validator/filter")
 router.get("/", function(req, res) {
     console.log(req.user)
     console.log(req.isAuthenticated())
-    res.sendFile(path.join(__dirname, "../public/home.html"))
+    if (req.isAuthenticated()) {
+        res.sendFile(path.join(__dirname, "../public/success.html"))
+    } else {
+        res.sendFile(path.join(__dirname, "../public/home.html"))
+    }
 })
 
 router.post("/login", passport.authenticate(
@@ -20,6 +25,12 @@ router.post("/login", passport.authenticate(
         failureRedirect: "/register"
     }
 ))
+
+router.get("/logout", function(req, res) {
+    req.logout()
+    req.session.destroy()
+    req.redirect("/")
+})
 
 router.get("/register", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/register.html"))
