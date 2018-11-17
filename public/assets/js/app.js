@@ -101,7 +101,8 @@ var makeCard = function (idea) {
         .attr("data-id", idea.id)
         .text("Pin")
 
-    head.text(idea.name)
+    head.addClass("card-head")
+        .text(idea.name)
 
     desc.text(idea.details)
 
