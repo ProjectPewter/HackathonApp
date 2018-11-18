@@ -173,20 +173,22 @@ $("body").on("click", "#submit", function (event) {
 
 $(document).ready(function () {
 
-
-    $("#recent").on("click", function () {
+    $("body").on("click", "#all", function () {
+        getPosts()
+    })
+    $("body").on("click", "#recent", function () {
         getPosts("/recent")
     })
-    $("#votes").on("click", function () {
+    $("body").on("click", "#votes", function () {
         getPosts("/votes")
     })
-    $("#easy").on("click", function () {
+    $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
     })
-    $("#medium").on("click", function () {
+    $("body").on("click", "#medium", function () {
         getPosts("/difficulty/2")
     })
-    $("#hard").on("click", function () {
+    $("body").on("click", "#hard", function () {
         getPosts("/difficulty/3")
     })
 
