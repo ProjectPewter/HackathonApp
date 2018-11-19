@@ -243,3 +243,12 @@ ul.ui-autocomplete {
 .ui-menu {
   z-index: 1051;
 }
+textarea {
+  width: 400px;
+}
+#LanguagesTags {
+height: 50px;
+}
+.modal-content {
+  height: 550px;
+}

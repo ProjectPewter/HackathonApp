@@ -1,4 +1,4 @@
-USE hackathon_db;
+USE users_db;
 
 INSERT INTO ideas (name, details, tech, difficulty)
 VALUES ("Find a Pal!", "Helps you to find a pal in these tough times.", "HTML, CSS, JavaScript", 2);
@@ -8,3 +8,15 @@ VALUES ("Find a Pet!", "Helps you to find a pet in these tough times.", "HTML, C
 
 INSERT INTO ideas (name, details, tech, difficulty)
 VALUES ("Dog Adoption Matcher", "Dating app between owner and potential dog. Pull dogs from local shelters and match to owners profile.", "API, SQL, Node.js, Express", 3);
+
+
+INSERT INTO pinned (id, pin)
+VALUES (42, 10);
+INSERT INTO pinned (id, pin)
+VALUES (42, 12);
+INSERT INTO pinned (id, pin)
+VALUES (42, 15);
+INSERT INTO pinned (id, pin)
+VALUES (42, 12);
+INSERT INTO pinned (id, pin)
+VALUES (42, 10);

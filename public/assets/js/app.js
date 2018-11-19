@@ -1,15 +1,13 @@
-
-
 function getPosts(category) {
     var categoryString = category || "";
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
-        posts = data;
+        var posts = data;
         if (!posts || !posts.length) {
             displayEmpty();
         }
         else {
-            initializeRows();
+            initializeRows(posts);
         }
     });
 }
@@ -18,7 +16,7 @@ function getPosts(category) {
 getPosts();
 // InitializeRows handles appending all of our constructed post HTML inside
 // blogContainer
-function initializeRows() {
+function initializeRows(posts) {
     $("#cardHolder").empty();
     for (var i = 0; i < posts.length; i++) {
         makeCard(posts[i])
@@ -70,6 +68,16 @@ function filterFunction() {
     }
 }
 
+$(document).ready(function() {
+    function updateUserDisplay() {
+        $.get("/users/id", function(data) {
+            id = data[0].id
+            $("#profileName").text(data[0].username)
+        })
+    }
+    updateUserDisplay()
+})
+
 $(document).on("click", ".close", function () {
     $("#myModal").hide();
 })
@@ -98,6 +106,7 @@ var makeCard = function (idea) {
         .text("Read")
 
     pin.addClass("pin-card")
+        .attr("data-id", idea.id)
         .text("Pin")
 
     head.addClass("card-head")
@@ -105,10 +114,19 @@ var makeCard = function (idea) {
 
     desc.text(idea.details)
 
+    //liking functionality 
+    var likeButton = $("<button>")
+    likeButton.addClass("like-button btn-default btn-sm")
+        .attr("data-id", idea.id)
+        .append('<i class="fas fa-thumbs-up"></i>')
+        .append('<span class="count"> ' + idea.votes + '</span>')
+
+
     cardDiv.append(head)
         .append(desc)
         .append(read)
         .append(pin)
+        .append(likeButton)
 
     colDiv.append(cardDiv)
 
@@ -116,74 +134,34 @@ var makeCard = function (idea) {
 }
 
 
-$("#submit").on("click", function (event) {
-    console.log("click");
-    event.preventDefault();
-    // Gather user inputs
-    function validateForm() {
-        var isValid = true;
-        $(".form-control").each(function () {
-            if ($(this).val() === "") {
-                isValid = false;
-            }
-        });
-
-        $(".select").each(function () {
-
-            if ($(this).val() === "") {
-                isValid = false;
-            }
-        });
-        return isValid;
-    }
-    if (validateForm()) {
-
-
-        var newIdea = {
-            ideaName: $("#idea-name-input").val().trim(),
-            details: $("#details-input").val().trim(),
-            tech: $("#tech-input").val().trim(),
-            difficulty: $("#level-input").val().trim()
-        };
-        $.post("/api/ideas", newIdea, function (data) {
-            console.log(data)
-        })
-        console.log("click");
-        $("#submitModal").hide();
-        $("#successModal").modal();
-    } else {
-        alert("Please fill out all fields before submitting!");
-    }
-});
-
 // $("#submit").on("click", function (event) {
 //     console.log("click");
 //     event.preventDefault();
 //     $("#submitModal").hide();
 //     $("#successModal").modal();
 // });
-$(document).on("click", ".close-success", function () {
-    $("#successModal").hide();
-    $(".modal-backdrop").hide();
-})
-
 
 $(document).ready(function () {
 
-
-    $("#recent").on("click", function () {
-        getPosts("/recent")
+    $("body").on("click", "#all", function () {
+        getPosts()
     })
-    $("#votes").on("click", function () {
-        getPosts("/votes")
+    $("body").on("click", "#recent", function () {
+        getPosts("/recent/order")
     })
-    $("#easy").on("click", function () {
+    $("body").on("click", "#random", function () {
+        getPosts("/random/random")
+    })
+    $("body").on("click", "#votes", function () {
+        getPosts("/votes/order")
+    })
+    $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
     })
-    $("#medium").on("click", function () {
+    $("body").on("click", "#medium", function () {
         getPosts("/difficulty/2")
     })
-    $("#hard").on("click", function () {
+    $("body").on("click", "#hard", function () {
         getPosts("/difficulty/3")
     })
 
@@ -209,267 +187,45 @@ $(document).ready(function () {
         })
         $("#myModal").modal();
     });
-})
-$( function() {
-    var availableTags = [
-        "4th Dimension",
-        "ABAP",
-        "ABC",
-        "ActionScript",
-        "Ada",
-        "Agilent VEE",
-        "Algol",
-        "Alice",
-        "Angelscript",
-        "Apex",
-        "APL",
-        "AppleScript",
-        "Arc",
-        "Arduino",
-        "ASP",
-        "AspectJ",
-        "Assembly",
-        "ATLAS",
-        "Augeas",
-        "AutoHotkey",
-        "AutoIt",
-        "AutoLISP",
-        "Automator",
-        "Avenue",
-        "Awk",
-        "Bash",
-        "(Visual) Basic",
-        "bc",
-        "BCPL",
-        "BETA",
-        "BlitzMax",
-        "Boo",
-        "Bourne Shell",
-        "Bro",
-        "C",
-        "C Shell",
-        "C#",
-        "C++",
-        "C++/CLI",
-        "C-Omega",
-        "Caml",
-        "Ceylon",
-        "CFML",
-        "cg",
-        "Ch",
-        "CHILL",
-        "CIL",
-        "CL (OS/400)",
-        "Clarion",
-        "Clean",
-        "Clipper",
-        "Clojure",
-        "CLU",
-        "COBOL",
-        "Cobra",
-        "CoffeeScript",
-        "ColdFusion",
-        "COMAL",
-        "Common Lisp",
-        "Coq",
-        "cT",
-        "Curl",
-        "D",
-        "Dart",
-        "DCL",
-        "DCPU-16 ASM",
-        "Delphi/Object Pascal",
-        "DiBOL",
-        "Dylan",
-        "E",
-        "eC",
-        "Ecl",
-        "ECMAScript",
-        "EGL",
-        "Eiffel",
-        "Elixir",
-        "Emacs Lisp",
-        "Erlang",
-        "Etoys",
-        "Euphoria",
-        "EXEC",
-        "F#",
-        "Factor",
-        "Falcon",
-        "Fancy",
-        "Fantom",
-        "Felix",
-        "Forth",
-        "Fortran",
-        "Fortress",
-        "(Visual) FoxPro",
-        "Gambas",
-        "GNU Octave",
-        "Go",
-        "Google AppsScript",
-        "Gosu",
-        "Groovy",
-        "Haskell",
-        "haXe",
-        "Heron",
-        "HPL",
-        "HyperTalk",
-        "Icon",
-        "IDL",
-        "Inform",
-        "Informix-4GL",
-        "INTERCAL",
-        "Io",
-        "Ioke",
-        "J",
-        "J#",
-        "JADE",
-        "Java",
-        "Java FX Script",
-        "JavaScript",
-        "JScript",
-        "JScript.NET",
-        "Julia",
-        "Korn Shell",
-        "Kotlin",
-        "LabVIEW",
-        "Ladder Logic",
-        "Lasso",
-        "Limbo",
-        "Lingo",
-        "Lisp",
-        "Logo",
-        "Logtalk",
-        "LotusScript",
-        "LPC",
-        "Lua",
-        "Lustre",
-        "M4",
-        "MAD",
-        "Magic",
-        "Magik",
-        "Malbolge",
-        "MANTIS",
-        "Maple",
-        "Mathematica",
-        "MATLAB",
-        "Max/MSP",
-        "MAXScript",
-        "MEL",
-        "Mercury",
-        "Mirah",
-        "Miva",
-        "ML",
-        "Monkey",
-        "Modula-2",
-        "Modula-3",
-        "MOO",
-        "Moto",
-        "MS-DOS Batch",
-        "MUMPS",
-        "NATURAL",
-        "Nemerle",
-        "Nimrod",
-        "NQC",
-        "NSIS",
-        "Nu",
-        "NXT-G",
-        "Oberon",
-        "Object Rexx",
-        "Objective-C",
-        "Objective-J",
-        "OCaml",
-        "Occam",
-        "ooc",
-        "Opa",
-        "OpenCL",
-        "OpenEdge ABL",
-        "OPL",
-        "Oz",
-        "Paradox",
-        "Parrot",
-        "Pascal",
-        "Perl",
-        "PHP",
-        "Pike",
-        "PILOT",
-        "PL/I",
-        "PL/SQL",
-        "Pliant",
-        "PostScript",
-        "POV-Ray",
-        "PowerBasic",
-        "PowerScript",
-        "PowerShell",
-        "Processing",
-        "Prolog",
-        "Puppet",
-        "Pure Data",
-        "Python",
-        "Q",
-        "R",
-        "Racket",
-        "REALBasic",
-        "REBOL",
-        "Revolution",
-        "REXX",
-        "RPG (OS/400)",
-        "Ruby",
-        "Rust",
-        "S",
-        "S-PLUS",
-        "SAS",
-        "Sather",
-        "Scala",
-        "Scheme",
-        "Scilab",
-        "Scratch",
-        "sed",
-        "Seed7",
-        "Self",
-        "Shell",
-        "SIGNAL",
-        "Simula",
-        "Simulink",
-        "Slate",
-        "Smalltalk",
-        "Smarty",
-        "SPARK",
-        "SPSS",
-        "SQR",
-        "Squeak",
-        "Squirrel",
-        "Standard ML",
-        "Suneido",
-        "SuperCollider",
-        "TACL",
-        "Tcl",
-        "Tex",
-        "thinBasic",
-        "TOM",
-        "Transact-SQL",
-        "Turing",
-        "TypeScript",
-        "Vala/Genie",
-        "VBScript",
-        "Verilog",
-        "VHDL",
-        "VimL",
-        "Visual Basic .NET",
-        "WebDNA",
-        "Whitespace",
-        "X10",
-        "xBase",
-        "XBase++",
-        "Xen",
-        "XPL",
-        "XSLT",
-        "XQuery",
-        "yacc",
-        "Yorick",
-        "Z shell",
-    ];
-    $( "#tags" ).autocomplete({
-      source: availableTags
+
+    $("#cardHolder").on("click", ".pin-card", function () {
+        var alreadyPinned = false;
+        console.log("click")
+        var id = $(this).attr("data-id")
+        alreadyLiked = true;
+
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
+
+        $.post("/api/user/pinned/" + id, function (data) {
+            console.log(data)
+        })
+        alert("Pinned!")
+    })
+
+
+    $("#cardHolder").on("click", ".like-button", function (e) {
+        var alreadyLiked = false;
+        console.log("liked")
+        var id = $(this).attr("data-id")
+        var $counter = $(this).find(".count");
+        var count = $counter.text() | 0; //corose current count to an int
+        count++
+        $counter.text(" " + count);//set new count
+        alreadyLiked = true;
+
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
+
+        var sentData = {
+            votes: count
+        }
+
+        //post
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log(data)
+        })
     });
-  } );
+})

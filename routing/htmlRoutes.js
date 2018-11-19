@@ -12,14 +12,16 @@ const { sanitizeBody } = require("express-validator/filter")
 router.get("/", function(req, res) {
     console.log(req.user)
     console.log(req.isAuthenticated())
-    // if (req.isAuthenticated()) {
-    //     res.sendFile(path.join(__dirname, "../public/success.html"))
-    // } else {
+    if (req.isAuthenticated()) {
         res.sendFile(path.join(__dirname, "../public/home.html"))
-    // }
+        console.log(req.session.passport.user.user_id)
+    } else {
+        res.sendFile(path.join(__dirname, "../public/home.html"))
+    }
 })
 
 router.get("/dashboard", function(req, res) {
+  
   res.sendFile(path.join(__dirname, "../public/dash.html"))
 })
 
@@ -29,6 +31,16 @@ router.post("/login", passport.authenticate(
         failureRedirect: "/register"
     }
 ))
+
+router.get("/dashboard", function(req, res) {
+    // var uName = req.params.username
+
+    // connection.query("SELECT username, email FROM users WHERE username = ?" [uName], function(error, results) {
+    //     if (err) throw err
+
+        res.sendFile(path.join(__dirname, "../public/dash.html"))
+    // })
+})
 
 router.get("/logout", function(req, res) {
     req.logout()
