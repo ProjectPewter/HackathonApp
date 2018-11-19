@@ -18,6 +18,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
   crossorigin="anonymous"></script>
   <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <!--textext-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-textext/1.3.0/jquery.textext.min.js"></script>
   <script src="assets/js/app.js"></script>
@@ -71,7 +72,7 @@
       <div class='row'>
         <!-- <div class='col-md-1'>
         </div> -->
-        <div class='col-lg-3 col-md-3 col-xs-6 column'>
+        <div class='col-lg-4 col-md-4 col-xs-6 column'>
           <p class="button-headings">Sort by</p>
           <ul buttons="0">
             <li class="mbr-gallery-filter-all">
@@ -82,6 +83,9 @@
             </li>
             <li>
               <button id="recent" class="btn btn-sm btn-primary-outline">Newest</button>
+            </li>
+            <li>
+              <button id="random" class="btn btn-sm btn-primary-outline">Random</button>
             </li>
           </ul>
           </ul>
@@ -101,12 +105,12 @@
             </li>
           </ul>
         </div>
-        <div class='col-lg-6 col-md-6 col-xs-6 column'>
+        <!-- <div class='col-lg-6 col-md-6 col-xs-6 column'>
           <p class="button-headings">Language/Technology</p>
           <ul buttons="0">
             <li class="mbr-gallery-filter-all">
             <li>
-              <button id="javascript" class="btn btn-sm btn-primary-outline">Javascript</button>
+              <button id="random" class="btn btn-sm btn-primary-outline">Javascript</button>
             </li>
             <li>
               <button id="c++" class="btn btn-sm btn-primary-outline">C++</button>
@@ -124,7 +128,7 @@
               <button id="react" class="btn btn-sm btn-primary-outline">React</button>
             </li>
           </ul>
-        </div>
+        </div> -->
         <!-- <div class='col-md-2'>
         </div> -->
       </div>
@@ -216,7 +220,7 @@
   <!-- Footer -->
   <footer class="py-4">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      <p class="m-0 text-center text-white">Copyright &copy; Hackathon Idea Generator 2018</p>
     </div>
     <!-- /.container -->
   </footer>
@@ -240,7 +244,7 @@
           <input type="checkbox" checked="checked" name="remember"> Remember me
         </label>
         <br>
-        <span class="register"><a href="#">Register</a></span>
+        <span class="register"><a href="/register">Register</a></span>
         <div class="login-button-cont">
           <button class=" btn btn-secondary login" type="submit">Log-in </button>
           <button class="btn btn-secondary" type="button" onclick="document.getElementById('id01').style.display='none'"

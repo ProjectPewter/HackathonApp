@@ -2,12 +2,12 @@ function getPosts(category) {
     var categoryString = category || "";
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
-        posts = data;
+        var posts = data;
         if (!posts || !posts.length) {
             displayEmpty();
         }
         else {
-            initializeRows();
+            initializeRows(posts);
         }
     });
 }
@@ -16,7 +16,7 @@ function getPosts(category) {
 getPosts();
 // InitializeRows handles appending all of our constructed post HTML inside
 // blogContainer
-function initializeRows() {
+function initializeRows(posts) {
     $("#cardHolder").empty();
     for (var i = 0; i < posts.length; i++) {
         makeCard(posts[i])
@@ -114,10 +114,19 @@ var makeCard = function (idea) {
 
     desc.text(idea.details)
 
+    //liking functionality 
+    var likeButton = $("<button>")
+    likeButton.addClass("like-button btn-default btn-sm")
+        .attr("data-id", idea.id)
+        .append('<i class="fas fa-thumbs-up"></i>')
+        .append('<span class="count"> ' + idea.votes + '</span>')
+
+
     cardDiv.append(head)
         .append(desc)
         .append(read)
         .append(pin)
+        .append(likeButton)
 
     colDiv.append(cardDiv)
 
@@ -138,10 +147,13 @@ $(document).ready(function () {
         getPosts()
     })
     $("body").on("click", "#recent", function () {
-        getPosts("/recent")
+        getPosts("/recent/order")
+    })
+    $("body").on("click", "#random", function () {
+        getPosts("/random/random")
     })
     $("body").on("click", "#votes", function () {
-        getPosts("/votes")
+        getPosts("/votes/order")
     })
     $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
@@ -152,9 +164,6 @@ $(document).ready(function () {
     $("body").on("click", "#hard", function () {
         getPosts("/difficulty/3")
     })
-<<<<<<< HEAD
-})
-=======
 
     $("#cardHolder").on("click", "#read", function () {
         console.log("click");
@@ -180,13 +189,43 @@ $(document).ready(function () {
     });
 
     $("#cardHolder").on("click", ".pin-card", function () {
+        var alreadyPinned = false;
         console.log("click")
         var id = $(this).attr("data-id")
+        alreadyLiked = true;
+
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
 
         $.post("/api/user/pinned/" + id, function (data) {
             console.log(data)
         })
         alert("Pinned!")
     })
+
+
+    $("#cardHolder").on("click", ".like-button", function (e) {
+        var alreadyLiked = false;
+        console.log("liked")
+        var id = $(this).attr("data-id")
+        var $counter = $(this).find(".count");
+        var count = $counter.text() | 0; //corose current count to an int
+        count++
+        $counter.text(" " + count);//set new count
+        alreadyLiked = true;
+
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
+
+        var sentData = {
+            votes: count
+        }
+
+        //post
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log(data)
+        })
+    });
 })
->>>>>>> 3bbf1e4b308aa2541f760577aac9a79f657ea231
