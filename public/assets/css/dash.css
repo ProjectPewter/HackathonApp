@@ -231,3 +231,22 @@ white-space: nowrap;
   color: black;
   text-align: left;
 }
+ul.ui-autocomplete {
+  list-style: none;
+
+  background-color: white;
+  width: 300px;
+}
+
+.ui-menu {
+  z-index: 1051;
+}
+textarea {
+  width: 400px;
+}
+#LanguagesTags {
+height: 50px;
+}
+.modal-content {
+  height: 550px;
+}

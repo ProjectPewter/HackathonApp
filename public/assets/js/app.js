@@ -81,13 +81,7 @@ $(document).ready(function() {
 $(document).on("click", ".close", function () {
     $("#myModal").hide();
 })
-
 // // Modal stuff
-$("#read-card").on("click", function (event) {
-    console.log("click");
-    event.preventDefault();
-    $("#myModal").modal();
-});
 
 // Function that makes the idea cards
 var makeCard = function (idea) {
@@ -95,8 +89,8 @@ var makeCard = function (idea) {
     var cardDiv = $("<div>")
     var head = $("<h5>")
     var desc = $("<p>")
-    var read = $("<a>")
-    var pin = $("<a>")
+    var read = $("<button>")
+    var pin = $("<button>")
 
     colDiv.addClass("col-lg-3")
         .addClass("col-md-4")
@@ -104,17 +98,19 @@ var makeCard = function (idea) {
 
     cardDiv.addClass("card-desc")
 
-    read.attr("href", idea.link)
-        .addClass("read-card")
-        .attr("data-toggle", "modal")
-        .attr("data-target", "#myModal")
+    read.addClass("read-card")
+        .attr("id", "read")
+        // .attr("data-toggle", "modal")
+        // .attr("data-target", "#myModal")
+        .attr("data-id", idea.id)
         .text("Read")
 
-    pin.attr("href", idea.link)
-        .addClass("pin-card")
+    pin.addClass("pin-card")
+        .attr("data-id", idea.id)
         .text("Pin")
 
-    head.text(idea.name)
+    head.addClass("card-head")
+        .text(idea.name)
 
     desc.text(idea.details)
 
@@ -128,72 +124,6 @@ var makeCard = function (idea) {
     $("#cardHolder").append(colDiv)
 }
 
-// Capture the form inputs
-// $("#submit").on("click", function (event) {
-//     event.preventDefault();
-
-//     // Form validation
-//     function validateForm() {
-//         var isValid = true;
-//         $(".form-control").each(function () {
-//             if ($(this).val() === "") {
-//                 isValid = false;
-//             }
-//         });
-
-//         $(".chosen-select").each(function () {
-
-//             if ($(this).val() === "") {
-//                 isValid = false;
-//             }
-//         });
-//         return isValid;
-//     }
-
-//     // If all required fields are filled
-//     if (validateForm()) {
-//         // Create an object for the user"s data
-//         var userData = {
-//             name: $("#name").val(),
-//             details: $("#photo").val(),
-//             tech: 3,
-//             difficulty: 4
-
-//         };
-
-//         // AJAX post the data to the friends API.
-//         $.post("/api/friends", userData, function (data) {
-
-//             // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-//             $("#match-name").text(data.name);
-//             $("#match-img").attr("src", data.photo);
-
-//             // Show the modal with the best match
-//             $("#results-modal").modal("toggle");
-
-//         });
-//     } else {
-//         alert("Please fill out all fields before submitting!");
-//     }
-// });
-
-$("#submit").on("click", function (event) {
-    console.log("click");
-    event.preventDefault();
-    // Gather user inputs
-    var newIdea = {
-        ideaName: $("#idea-name-input").val().trim(),
-        details: $("#details-input").val().trim(),
-        tech: $("#tech-input").val().trim(),
-        difficulty: $("#level-input").val().trim()
-    };
-    $.post("/api/ideas", newIdea, function (data) {
-        console.log(data)
-    })
-    console.log("click");
-    $("#submitModal").hide();
-    $("#successModal").modal();
-});
 
 // $("#submit").on("click", function (event) {
 //     console.log("click");
@@ -201,28 +131,62 @@ $("#submit").on("click", function (event) {
 //     $("#submitModal").hide();
 //     $("#successModal").modal();
 // });
-$(document).on("click", ".close-success", function () {
-    $("#successModal").hide();
-    $(".modal-backdrop").hide();
-})
-
 
 $(document).ready(function () {
 
-
-    $("#recent").on("click", function () {
+    $("body").on("click", "#all", function () {
+        getPosts()
+    })
+    $("body").on("click", "#recent", function () {
         getPosts("/recent")
     })
-    $("#votes").on("click", function () {
+    $("body").on("click", "#votes", function () {
         getPosts("/votes")
     })
-    $("#easy").on("click", function () {
+    $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
     })
-    $("#medium").on("click", function () {
+    $("body").on("click", "#medium", function () {
         getPosts("/difficulty/2")
     })
-    $("#hard").on("click", function () {
+    $("body").on("click", "#hard", function () {
         getPosts("/difficulty/3")
     })
+<<<<<<< HEAD
 })
+=======
+
+    $("#cardHolder").on("click", "#read", function () {
+        console.log("click");
+        var id = $(this).attr("data-id")
+        // event.preventDefault();
+        $.get("/api/ideas/" + id, function (data) {
+            console.log(data)
+            var projectName = $('#proj-name')
+            var projectDetails = $('#proj-details')
+            var projectTech = $('#proj-tech')
+            var projectLevel = $('#proj-level')
+            var difficultyConvert = {
+                1: "Easy",
+                2: "Medium",
+                3: "Hard"
+            }
+            projectName.text(data[0].name)
+            projectDetails.text(data[0].details)
+            projectTech.text(data[0].tech)
+            projectLevel.text(difficultyConvert[data[0].difficulty])
+        })
+        $("#myModal").modal();
+    });
+
+    $("#cardHolder").on("click", ".pin-card", function () {
+        console.log("click")
+        var id = $(this).attr("data-id")
+
+        $.post("/api/user/pinned/" + id, function (data) {
+            console.log(data)
+        })
+        alert("Pinned!")
+    })
+})
+>>>>>>> 3bbf1e4b308aa2541f760577aac9a79f657ea231
