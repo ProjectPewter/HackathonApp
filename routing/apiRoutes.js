@@ -1,5 +1,4 @@
 var express = require('express')
-var ideas = require('../data/ideas')
 var router = express.Router()
 var connection = require('../config/connection.js')
 var passport = require("passport")
@@ -19,6 +18,16 @@ router.get("/users/:id", function(req, res) {
   })
 })
 
+
+router.get('/api/ideas/:id', function (req, res) {
+  connection.query("SELECT * FROM ideas WHERE ?", {
+    id: req.params.id
+  }, function (err, result) {
+    if (err) throw err
+
+    res.json(result)
+  })
+})
 
 router.get('/api/ideas/votes', function (req, res) {
   connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY votes DESC", {}, function (err, result){
@@ -53,6 +62,8 @@ router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
   })
 })
 
+
+
 router.post('/api/ideas', function (req, res) {
   var projectName = req.body.ideaName
   var projectDetails = req.body.details
@@ -70,6 +81,40 @@ router.post('/api/ideas', function (req, res) {
 
       console.log(result.affectedRows)
     })
+})
+
+router.get('/api/user/pinned', function (req, res) {
+  if (req.isAuthenticated()) {
+    console.log(req.session.passport.user.user_id)
+    connection.query("SELECT * FROM pinned WHERE ?", {
+      id: req.session.passport.user.user_id
+    }, function (err, result) {
+      if (err) throw err
+
+      res.json(result)
+    })
+  } else {
+    console.log("Not Logged In")
+    res.end()
+  }
+})
+
+router.post('/api/user/pinned/:id', function (req, res) {
+  if (req.isAuthenticated()) {
+    console.log(req.session.passport.user.user_id)
+    connection.query("INSERT INTO pinned SET ?", {
+      id: req.session.passport.user.user_id,
+      pin: req.params.id
+    }, function (err, result) {
+      if (err) throw err
+
+      res.json(result.affectedRows)
+    })
+  }
+  else {
+    console.log("Not Logged In")
+    res.end()
+  }
 })
 
 module.exports = router

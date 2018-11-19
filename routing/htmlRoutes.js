@@ -20,6 +20,11 @@ router.get("/", function(req, res) {
     }
 })
 
+router.get("/dashboard", function(req, res) {
+  
+  res.sendFile(path.join(__dirname, "../public/dash.html"))
+})
+
 router.post("/login", passport.authenticate(
     "local", {
         successRedirect: "/",
