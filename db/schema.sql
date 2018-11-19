@@ -1,7 +1,4 @@
-DROP DATABASE IF EXISTS hackathon_db;
-CREATE DATABASE hackathon_db;
-
-USE hackathon_db;
+USE users_db;
 
 CREATE TABLE ideas (
   id INT AUTO_INCREMENT,

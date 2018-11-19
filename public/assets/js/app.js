@@ -1,5 +1,3 @@
-
-
 function getPosts(category) {
     var categoryString = category || "";
     $.get("/api/ideas" + categoryString, function (data) {
@@ -69,6 +67,16 @@ function filterFunction() {
         }
     }
 }
+
+$(document).ready(function() {
+    function updateUserDisplay() {
+        $.get("/users/id", function(data) {
+            id = data[0].id
+            $("#profileName").text(data[0].username)
+        })
+    }
+    updateUserDisplay()
+})
 
 $(document).on("click", ".close", function () {
     $("#myModal").hide();

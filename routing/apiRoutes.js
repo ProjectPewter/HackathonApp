@@ -1,7 +1,8 @@
 var express = require('express')
 var ideas = require('../data/ideas')
 var router = express.Router()
-var connection = require('../server')
+var connection = require('../config/connection.js')
+var passport = require("passport")
 
 router.get('/api/ideas', function (req, res) {
   connection.query("SELECT * FROM ideas", {}, function (err, result) {
@@ -10,6 +11,14 @@ router.get('/api/ideas', function (req, res) {
     res.json(result)
   })
 })
+
+router.get("/users/:id", function(req, res) {
+  connection.query("SELECT id, username, email FROM users WHERE ?",
+   {id: req.session.passport.user.user_id}, function(err, result) {
+     res.json(result)
+  })
+})
+
 
 router.get('/api/ideas/votes', function (req, res) {
   connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY votes DESC", {}, function (err, result){
