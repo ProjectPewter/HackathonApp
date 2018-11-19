@@ -85,7 +85,7 @@ router.post('/api/ideas', function (req, res) {
 
 router.get('/api/user/pinned', function (req, res) {
   if (req.isAuthenticated()) {
-    console.log(req.session.passport.user.user_id)
+    // console.log(req.session.passport.user.user_id)
     connection.query("SELECT * FROM pinned WHERE ?", {
       id: req.session.passport.user.user_id
     }, function (err, result) {
@@ -101,7 +101,7 @@ router.get('/api/user/pinned', function (req, res) {
 
 router.post('/api/user/votes/:id', function (req, res) {
   if (req.isAuthenticated()) {
-    console.log(req.session.passport.user.user_id)
+    // console.log(req.session.passport.user.user_id)
     connection.query("UPDATE ideas SET ? WHERE ?", [
       {
         votes: req.body.votes

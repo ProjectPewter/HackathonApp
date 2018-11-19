@@ -68,9 +68,9 @@ function filterFunction() {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     function updateUserDisplay() {
-        $.get("/users/id", function(data) {
+        $.get("/users/id", function (data) {
             id = data[0].id
             $("#profileName").text(data[0].username)
         })
@@ -189,10 +189,9 @@ $(document).ready(function () {
     });
 
     $("#cardHolder").on("click", ".pin-card", function () {
-        var alreadyPinned = false;
         console.log("click")
         var id = $(this).attr("data-id")
-        alreadyLiked = true;
+        var alreadyLiked = true;
 
         if (alreadyLiked) {
             $(this).prop('disabled', true);
@@ -205,27 +204,68 @@ $(document).ready(function () {
     })
 
 
+    // $("#cardHolder").on("click", ".like-button", function (e) {
+    //     var alreadyLiked = false;
+    //     console.log("liked")
+    //     var id = $(this).attr("data-id")
+    //     var $counter = $(this).find(".count");
+    //     var count = $counter.text() | 0; //corose current count to an int
+    //     count++
+    //     $counter.text(" " + count);//set new count
+    //     alreadyLiked = true;
+
+    //     if (alreadyLiked) {
+    //         $(this).prop('disabled', true);
+    //     }
+
+    //     var sentData = {
+    //         votes: count
+    //     }
+
+    //     //post
+    //     $.post("/api/user/votes/" + id, sentData, function (data) {
+    //         console.log(data)
+    //     })
+    // });
+
     $("#cardHolder").on("click", ".like-button", function (e) {
         var alreadyLiked = false;
+
         console.log("liked")
-        var id = $(this).attr("data-id")
         var $counter = $(this).find(".count");
-        var count = $counter.text() | 0; //corose current count to an int
-        count++
+        var count = $counter.text() || 0; //corose current count to an int
+        count++//set new count
         $counter.text(" " + count);//set new count
         alreadyLiked = true;
-
-        if (alreadyLiked) {
-            $(this).prop('disabled', true);
-        }
+        console.log("already liked" + alreadyLiked);
+        $(this).removeClass("like-button")
+        $(this).addClass("unliked")
 
         var sentData = {
             votes: count
         }
 
-        //post
         $.post("/api/user/votes/" + id, sentData, function (data) {
-            console.log(data)
+            console.log("Affected Rows:" + data)
         })
-    });
+    })
+
+    $("#cardHolder").on("click", ".unliked", function (e) {
+        var $counter = $(this).find(".count");
+        var count = $counter.text() || 0; //corose current count to an int
+        count--
+        $counter.text(" " + count);//remove 1
+        alreadyLiked = false;
+        console.log("already liked should be false =" + alreadyLiked);
+        $(this).removeClass("unliked")
+        $(this).addClass("like-button")
+
+        var sentData = {
+            votes: count
+        }
+
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log("Affected Rows:" + data)
+        })
+    })
 })
