@@ -233,6 +233,7 @@ $(document).ready(function () {
 
         console.log("liked")
         var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
         var count = $counter.text() || 0; //corose current count to an int
         count++//set new count
         $counter.text(" " + count);//set new count
@@ -252,6 +253,7 @@ $(document).ready(function () {
 
     $("#cardHolder").on("click", ".unliked", function (e) {
         var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
         var count = $counter.text() || 0; //corose current count to an int
         count--
         $counter.text(" " + count);//remove 1
