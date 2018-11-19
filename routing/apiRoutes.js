@@ -4,7 +4,7 @@ var connection = require('../config/connection')
 const passport = require("passport")
 
 router.get('/api/ideas', function (req, res) {
-  connection.query("SELECT * FROM ideas", {}, function (err, result) {
+  connection.query("SELECT * FROM ideas", function (err, result) {
     if (err) throw err
 
     res.json(result)
@@ -21,24 +21,24 @@ router.get('/api/ideas/:id', function (req, res) {
   })
 })
 
-router.get('/api/ideas/votes', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY votes DESC", {}, function (err, result) {
+router.get('/api/ideas/votes/order', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY votes DESC", function (err, result) {
     if (err) throw err
 
     res.json(result)
   })
 })
 
-router.get('/api/ideas/recent', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY created DESC", {}, function (err, result) {
+router.get('/api/ideas/recent/order', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY id DESC", function (err, result) {
     if (err) throw err
 
     res.json(result)
   })
 })
 
-router.get('/api/ideas/random', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY RAND() LIMIT 1", {}, function (err, result) {
+router.get('/api/ideas/random/random', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY RAND() LIMIT 1", function (err, result) {
     if (err) throw err
 
     res.json(result)
@@ -47,7 +47,7 @@ router.get('/api/ideas/random', function (req, res) {
 
 router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
   var diff = req.params.difficulty
-  connection.query("SELECT name, details, tech, difficulty FROM ideas WHERE ?", { difficulty: diff }, function (err, result) {
+  connection.query("SELECT * FROM ideas WHERE ?", { difficulty: diff }, function (err, result) {
     if (err) throw err
 
     res.json(result)

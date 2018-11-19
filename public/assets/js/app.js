@@ -4,12 +4,12 @@ function getPosts(category) {
     var categoryString = category || "";
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
-        posts = data;
+        var posts = data;
         if (!posts || !posts.length) {
             displayEmpty();
         }
         else {
-            initializeRows();
+            initializeRows(posts);
         }
     });
 }
@@ -18,7 +18,7 @@ function getPosts(category) {
 getPosts();
 // InitializeRows handles appending all of our constructed post HTML inside
 // blogContainer
-function initializeRows() {
+function initializeRows(posts) {
     $("#cardHolder").empty();
     for (var i = 0; i < posts.length; i++) {
         makeCard(posts[i])
@@ -139,10 +139,13 @@ $(document).ready(function () {
         getPosts()
     })
     $("body").on("click", "#recent", function () {
-        getPosts("/recent")
+        getPosts("/recent/order")
+    })
+    $("body").on("click", "#random", function () {
+        getPosts("/random/random")
     })
     $("body").on("click", "#votes", function () {
-        getPosts("/votes")
+        getPosts("/votes/order")
     })
     $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
