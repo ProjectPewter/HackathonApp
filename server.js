@@ -24,6 +24,7 @@ app.use(cookieParser())
 if (process.env.JAWSDB_URL) {
   let options = {
     host:"kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    PORT: 3306,
     user: "hiuio7hibn9dzrcp",
     password: "ekgb28lxscrd3ygm",
     database: "apbi73k9uh5xvs1g"
