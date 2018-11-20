@@ -21,8 +21,11 @@ router.get("/", function(req, res) {
 })
 
 router.get("/dashboard", function(req, res) {
-  
-  res.sendFile(path.join(__dirname, "../public/dash.html"))
+  if(req.isAuthenticated()) {
+    res.sendFile(path.join(__dirname, "../public/dash.html"))
+  } else {
+      res.sendFile(path.join(__dirname, "../public/register.html"))
+  }
 })
 
 router.post("/login", passport.authenticate(

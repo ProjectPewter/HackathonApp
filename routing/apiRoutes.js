@@ -12,10 +12,10 @@ router.get('/api/ideas', function (req, res) {
 })
 
 router.get("/users/id", function(req, res) {
- connection.query("SELECT id, username, email FROM users WHERE ?",
-   {id: req.session.passport.user.user_id}, function(err, result) {
+    connection.query("SELECT id, username, email FROM users WHERE ?",
+    {id: req.session.passport.user.user_id}, function(err, result) {
      res.json(result)
-  })
+    })
 })
 
 
