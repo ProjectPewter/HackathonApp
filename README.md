@@ -33,3 +33,9 @@ The application will now be running locally on PORT 8080.
 
 # Demo
 Heroku link: 
+
+# Future Features:
+* Upvoting/downvoting system on users
+* Technology filters
+* Communication board between users
+
