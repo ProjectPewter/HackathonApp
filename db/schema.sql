@@ -1,4 +1,4 @@
-USE users_db;
+USE apbi73k9uh5xvs1g;
 
 CREATE TABLE ideas (
  id INT AUTO_INCREMENT,
