@@ -32,15 +32,15 @@ router.post("/login", passport.authenticate(
     }
 ))
 
-router.get("/dashboard", function(req, res) {
-    // var uName = req.params.username
+// router.get("/dashboard", function(req, res) {
+//     // var uName = req.params.username
 
-    // connection.query("SELECT username, email FROM users WHERE username = ?" [uName], function(error, results) {
-    //     if (err) throw err
+//     // connection.query("SELECT username, email FROM users WHERE username = ?" [uName], function(error, results) {
+//     //     if (err) throw err
 
-        res.sendFile(path.join(__dirname, "../public/dash.html"))
-    // })
-})
+//         res.sendFile(path.join(__dirname, "../public/dash.html"))
+//     // })
+// })
 
 router.get("/logout", function(req, res) {
     req.logout()
