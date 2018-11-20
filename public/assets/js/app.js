@@ -1,18 +1,13 @@
-
-
 function getPosts(category) {
     var categoryString = category || "";
-    if (categoryString) {
-        categoryString = "/category/" + categoryString;
-    }
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
-        posts = data;
+        var posts = data;
         if (!posts || !posts.length) {
             displayEmpty();
         }
         else {
-            initializeRows();
+            initializeRows(posts);
         }
     });
 }
@@ -21,7 +16,7 @@ function getPosts(category) {
 getPosts();
 // InitializeRows handles appending all of our constructed post HTML inside
 // blogContainer
-function initializeRows() {
+function initializeRows(posts) {
     $("#cardHolder").empty();
     for (var i = 0; i < posts.length; i++) {
         makeCard(posts[i])
@@ -32,7 +27,7 @@ function displayEmpty() {
     $("#cardHolder").empty();
     var messageH2 = $("<h2>");
     messageH2.css({ "text-align": "center", "margin-top": "50px" });
-    messageH2.html("No posts yet for this category, navigate <a href='/cms'>here</a> in order to create a new post.");
+    messageH2.html("No posts yet for this category, navigate <a href='/dashboard'>here</a> in order to create a new post.");
     $("#cardHolder").append(messageH2);
 }
 
@@ -52,10 +47,12 @@ window.onclick = function (event) {
     }
 }
 
+// Modal things
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
+//For the modal
 function filterFunction() {
     var input, filter, ul, li, a, i;
     input = document.getElementById("myInput");
@@ -71,16 +68,11 @@ function filterFunction() {
     }
 }
 
+
 $(document).on("click", ".close", function () {
     $("#myModal").hide();
 })
-
-// // Activate submit button
-$("#read-card").on("click", function (event) {
-    console.log("click");
-    event.preventDefault();
-    $("#myModal").modal();
-});
+// // Modal stuff
 
 // Function that makes the idea cards
 var makeCard = function (idea) {
@@ -88,8 +80,8 @@ var makeCard = function (idea) {
     var cardDiv = $("<div>")
     var head = $("<h5>")
     var desc = $("<p>")
-    var read = $("<a>")
-    var pin = $("<a>")
+    var read = $("<button>")
+    var pin = $("<button>")
 
     colDiv.addClass("col-lg-3")
         .addClass("col-md-4")
@@ -97,75 +89,176 @@ var makeCard = function (idea) {
 
     cardDiv.addClass("card-desc")
 
-    read.attr("href", idea.link)
-        .addClass("read-card")
-        .attr("data-toggle", "modal")
-        .attr("data-target", "#myModal")
+    read.addClass("read-card")
+        .attr("id", "read")
+        // .attr("data-toggle", "modal")
+        // .attr("data-target", "#myModal")
+        .attr("data-id", idea.id)
         .text("Read")
 
-    pin.attr("href", idea.link)
-        .addClass("pin-card")
+    pin.addClass("pin-card")
+        .attr("data-id", idea.id)
         .text("Pin")
 
-    head.text(idea.name)
+    head.addClass("card-head")
+        .text(idea.name)
 
     desc.text(idea.details)
+
+    //liking functionality 
+    var likeButton = $("<button>")
+    likeButton.addClass("like-button btn-default btn-sm")
+        .attr("data-id", idea.id)
+        .append('<i class="fas fa-thumbs-up"></i>')
+        .append('<span class="count"> ' + idea.votes + '</span>')
+
 
     cardDiv.append(head)
         .append(desc)
         .append(read)
         .append(pin)
+        .append(likeButton)
 
     colDiv.append(cardDiv)
 
     $("#cardHolder").append(colDiv)
 }
 
-// Capture the form inputs
-$("#submit").on("click", function (event) {
-    event.preventDefault();
 
-    // Form validation
-    function validateForm() {
-        var isValid = true;
-        $(".form-control").each(function () {
-            if ($(this).val() === "") {
-                isValid = false;
+// $("#submit").on("click", function (event) {
+//     console.log("click");
+//     event.preventDefault();
+//     $("#submitModal").hide();
+//     $("#successModal").modal();
+// });
+
+$(document).ready(function () {
+
+    $("body").on("click", "#all", function () {
+        getPosts()
+    })
+    $("body").on("click", "#recent", function () {
+        getPosts("/recent/order")
+    })
+    $("body").on("click", "#random", function () {
+        getPosts("/random/random")
+    })
+    $("body").on("click", "#votes", function () {
+        getPosts("/votes/order")
+    })
+    $("body").on("click", "#easy", function () {
+        getPosts("/difficulty/1")
+    })
+    $("body").on("click", "#medium", function () {
+        getPosts("/difficulty/2")
+    })
+    $("body").on("click", "#hard", function () {
+        getPosts("/difficulty/3")
+    })
+
+    $("#cardHolder").on("click", "#read", function () {
+        console.log("click");
+        var id = $(this).attr("data-id")
+        // event.preventDefault();
+        $.get("/api/ideas/" + id, function (data) {
+            console.log(data)
+            var projectName = $('#proj-name')
+            var projectDetails = $('#proj-details')
+            var projectTech = $('#proj-tech')
+            var projectLevel = $('#proj-level')
+            var difficultyConvert = {
+                1: "Easy",
+                2: "Medium",
+                3: "Hard"
             }
-        });
+            projectName.text(data[0].name)
+            projectDetails.text(data[0].details)
+            projectTech.text(data[0].tech)
+            projectLevel.text(difficultyConvert[data[0].difficulty])
+        })
+        $("#myModal").modal();
+    });
 
-        $(".chosen-select").each(function () {
+    $("#cardHolder").on("click", ".pin-card", function () {
+        console.log("click")
+        var id = $(this).attr("data-id")
+        var alreadyLiked = true;
 
-            if ($(this).val() === "") {
-                isValid = false;
-            }
-        });
-        return isValid;
-    }
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
 
-    // If all required fields are filled
-    if (validateForm()) {
-        // Create an object for the user"s data
-        var userData = {
-            name: $("#name").val(),
-            details: $("#photo").val(),
-            tech: 3,
-            difficulty: 4
+        $.post("/api/user/pinned/" + id, function (data) {
+            console.log(data)
+        })
+        alert("Pinned!")
+    })
 
-        };
 
-        // AJAX post the data to the friends API.
-        $.post("/api/friends", userData, function (data) {
+    // $("#cardHolder").on("click", ".like-button", function (e) {
+    //     var alreadyLiked = false;
+    //     console.log("liked")
+    //     var id = $(this).attr("data-id")
+    //     var $counter = $(this).find(".count");
+    //     var count = $counter.text() | 0; //corose current count to an int
+    //     count++
+    //     $counter.text(" " + count);//set new count
+    //     alreadyLiked = true;
 
-            // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-            $("#match-name").text(data.name);
-            $("#match-img").attr("src", data.photo);
+    //     if (alreadyLiked) {
+    //         $(this).prop('disabled', true);
+    //     }
 
-            // Show the modal with the best match
-            $("#results-modal").modal("toggle");
+    //     var sentData = {
+    //         votes: count
+    //     }
 
-        });
-    } else {
-        alert("Please fill out all fields before submitting!");
-    }
-});
+    //     //post
+    //     $.post("/api/user/votes/" + id, sentData, function (data) {
+    //         console.log(data)
+    //     })
+    // });
+
+    $("#cardHolder").on("click", ".like-button", function (e) {
+        var alreadyLiked = false;
+
+        console.log("liked")
+        var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
+        var count = $counter.text() || 0; //corose current count to an int
+        count++//set new count
+        $counter.text(" " + count);//set new count
+        alreadyLiked = true;
+        console.log("already liked" + alreadyLiked);
+        $(this).removeClass("like-button")
+        $(this).addClass("unliked")
+
+        var sentData = {
+            votes: count
+        }
+
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log("Affected Rows:" + data)
+        })
+    })
+
+    $("#cardHolder").on("click", ".unliked", function (e) {
+        var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
+        var count = $counter.text() || 0; //corose current count to an int
+        count--
+        $counter.text(" " + count);//remove 1
+        alreadyLiked = false;
+        console.log("already liked should be false =" + alreadyLiked);
+        $(this).removeClass("unliked")
+        $(this).addClass("like-button")
+
+        var sentData = {
+            votes: count
+        }
+
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log("Affected Rows:" + data)
+        })
+    })
+})
