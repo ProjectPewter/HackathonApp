@@ -42,6 +42,10 @@ $(document).ready(function () {
         $(".profile-content").append(messageH2);
     }
 
+    $(document).on("click", ".close", function () {
+        $("#myModal").hide();
+    })
+
     $("body").on("click", "#submit", function (event) {
         console.log("click");
         event.preventDefault();
@@ -108,6 +112,8 @@ $(document).ready(function () {
             // .attr("data-toggle", "modal")
             // .attr("data-target", "#myModal")
             .attr("data-id", idea.id)
+            // .attr("data")
+            // .attr("data-toggle", "modal")
             .text("Read")
     
         pin.addClass("pin-card")
