@@ -152,9 +152,6 @@ $(document).ready(function () {
     $("body").on("click", "#hard", function () {
         getPosts("/difficulty/3")
     })
-<<<<<<< HEAD
-})
-=======
 
     $("#cardHolder").on("click", "#read", function () {
         console.log("click");
@@ -189,4 +186,3 @@ $(document).ready(function () {
         alert("Pinned!")
     })
 })
->>>>>>> 3bbf1e4b308aa2541f760577aac9a79f657ea231

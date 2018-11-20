@@ -25,7 +25,7 @@ let options = {
   host: "localhost",
   user: "root",
   password: "root",
-  database: "hackathon_db"
+  database: "users_db"
 }
 
 var sessionStore = new MySQLStore(options);
