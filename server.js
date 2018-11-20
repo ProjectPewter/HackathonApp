@@ -28,6 +28,12 @@ let options = {
   database: "apbi73k9uh5xvs1g"
 }
 
+// let options = {
+//   host: "localhost",
+//   user: "root",
+//   password: "root",
+//   database: "users_db"
+// }
 
 var sessionStore = new MySQLStore(options);
 
