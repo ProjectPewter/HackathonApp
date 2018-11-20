@@ -32,7 +32,7 @@ The application will now be running locally on PORT 8080.
 ![Dashboard](/public/assets/img/dashboard.png)
 
 # Demo
-Heroku link: 
+Heroku link: https://hackathon-ideas.herokuapp.com/
 
 # Future Features:
 * Upvoting/downvoting system on users
