@@ -39,3 +39,4 @@ Heroku link:
 * Technology filters
 * Communication board between users
 
+Group project by Logan, Alex, Richard, Catherine, & Todd. CWRU Bootcamp 2018.
