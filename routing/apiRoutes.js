@@ -4,14 +4,14 @@ var connection = require('../config/connection.js')
 var passport = require("passport")
 
 router.get('/api/ideas', function (req, res) {
-  connection.query("SELECT * FROM ideas", {}, function (err, result) {
+  connection.query("SELECT * FROM ideas", function (err, result) {
     if (err) throw err
 
     res.json(result)
   })
 })
 
-router.get("/users/:id", function(req, res) {
+router.get("/users/id", function(req, res) {
   connection.query("SELECT id, username, email FROM users WHERE ?",
    {id: req.params.id}, function(err, result) {
      res.json(result)
@@ -29,24 +29,24 @@ router.get('/api/ideas/:id', function (req, res) {
   })
 })
 
-router.get('/api/ideas/votes', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY votes DESC", {}, function (err, result){
+router.get('/api/ideas/votes/order', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY votes DESC", function (err, result) {
     if (err) throw err
 
     res.json(result)
   })
 })
 
-router.get('/api/ideas/recent', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY created DESC", {}, function (err, result){
+router.get('/api/ideas/recent/order', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY id DESC", function (err, result) {
     if (err) throw err
 
     res.json(result)
   })
 })
 
-router.get('/api/ideas/random', function (req, res) {
-  connection.query("SELECT name, details, tech, difficulty FROM ideas ORDER BY RAND() LIMIT 1", {}, function (err, result){
+router.get('/api/ideas/random/random', function (req, res) {
+  connection.query("SELECT * FROM ideas ORDER BY RAND() LIMIT 1", function (err, result) {
     if (err) throw err
 
     res.json(result)
@@ -55,7 +55,7 @@ router.get('/api/ideas/random', function (req, res) {
 
 router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
   var diff = req.params.difficulty
-  connection.query("SELECT name, details, tech, difficulty FROM ideas WHERE ?", {difficulty: diff}, function (err, result) {
+  connection.query("SELECT * FROM ideas WHERE ?", { difficulty: diff }, function (err, result) {
     if (err) throw err
 
     res.json(result)
@@ -75,7 +75,7 @@ router.post('/api/ideas', function (req, res) {
       details: projectDetails,
       tech: projectTech,
       difficulty: projectDiff
-    }, 
+    },
     function (err, result) {
       if (err) throw err
 
@@ -85,7 +85,7 @@ router.post('/api/ideas', function (req, res) {
 
 router.get('/api/user/pinned', function (req, res) {
   if (req.isAuthenticated()) {
-    console.log(req.session.passport.user.user_id)
+    // console.log(req.session.passport.user.user_id)
     connection.query("SELECT * FROM pinned WHERE ?", {
       id: req.session.passport.user.user_id
     }, function (err, result) {
@@ -94,6 +94,27 @@ router.get('/api/user/pinned', function (req, res) {
       res.json(result)
     })
   } else {
+    console.log("Not Logged In")
+    res.end()
+  }
+})
+
+router.post('/api/user/votes/:id', function (req, res) {
+  if (req.isAuthenticated()) {
+    // console.log(req.session.passport.user.user_id)
+    connection.query("UPDATE ideas SET ? WHERE ?", [
+      {
+        votes: req.body.votes
+      },
+      {
+        id: req.params.id
+      }], function (err, result) {
+        if (err) throw err
+
+        res.json(result.affectedRows)
+      })
+  }
+  else {
     console.log("Not Logged In")
     res.end()
   }

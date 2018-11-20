@@ -2,12 +2,12 @@ function getPosts(category) {
     var categoryString = category || "";
     $.get("/api/ideas" + categoryString, function (data) {
         console.log("Posts", data);
-        posts = data;
+        var posts = data;
         if (!posts || !posts.length) {
             displayEmpty();
         }
         else {
-            initializeRows();
+            initializeRows(posts);
         }
     });
 }
@@ -16,7 +16,7 @@ function getPosts(category) {
 getPosts();
 // InitializeRows handles appending all of our constructed post HTML inside
 // blogContainer
-function initializeRows() {
+function initializeRows(posts) {
     $("#cardHolder").empty();
     for (var i = 0; i < posts.length; i++) {
         makeCard(posts[i])
@@ -68,15 +68,6 @@ function filterFunction() {
     }
 }
 
-$(document).ready(function() {
-    function updateUserDisplay() {
-        $.get("/users/id", function(data) {
-            id = data[0].id
-            $("#profileName").text(data[0].username)
-        })
-    }
-    updateUserDisplay()
-})
 
 $(document).on("click", ".close", function () {
     $("#myModal").hide();
@@ -114,10 +105,19 @@ var makeCard = function (idea) {
 
     desc.text(idea.details)
 
+    //liking functionality 
+    var likeButton = $("<button>")
+    likeButton.addClass("like-button btn-default btn-sm")
+        .attr("data-id", idea.id)
+        .append('<i class="fas fa-thumbs-up"></i>')
+        .append('<span class="count"> ' + idea.votes + '</span>')
+
+
     cardDiv.append(head)
         .append(desc)
         .append(read)
         .append(pin)
+        .append(likeButton)
 
     colDiv.append(cardDiv)
 
@@ -138,10 +138,13 @@ $(document).ready(function () {
         getPosts()
     })
     $("body").on("click", "#recent", function () {
-        getPosts("/recent")
+        getPosts("/recent/order")
+    })
+    $("body").on("click", "#random", function () {
+        getPosts("/random/random")
     })
     $("body").on("click", "#votes", function () {
-        getPosts("/votes")
+        getPosts("/votes/order")
     })
     $("body").on("click", "#easy", function () {
         getPosts("/difficulty/1")
@@ -179,10 +182,83 @@ $(document).ready(function () {
     $("#cardHolder").on("click", ".pin-card", function () {
         console.log("click")
         var id = $(this).attr("data-id")
+        var alreadyLiked = true;
+
+        if (alreadyLiked) {
+            $(this).prop('disabled', true);
+        }
 
         $.post("/api/user/pinned/" + id, function (data) {
             console.log(data)
         })
         alert("Pinned!")
+    })
+
+
+    // $("#cardHolder").on("click", ".like-button", function (e) {
+    //     var alreadyLiked = false;
+    //     console.log("liked")
+    //     var id = $(this).attr("data-id")
+    //     var $counter = $(this).find(".count");
+    //     var count = $counter.text() | 0; //corose current count to an int
+    //     count++
+    //     $counter.text(" " + count);//set new count
+    //     alreadyLiked = true;
+
+    //     if (alreadyLiked) {
+    //         $(this).prop('disabled', true);
+    //     }
+
+    //     var sentData = {
+    //         votes: count
+    //     }
+
+    //     //post
+    //     $.post("/api/user/votes/" + id, sentData, function (data) {
+    //         console.log(data)
+    //     })
+    // });
+
+    $("#cardHolder").on("click", ".like-button", function (e) {
+        var alreadyLiked = false;
+
+        console.log("liked")
+        var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
+        var count = $counter.text() || 0; //corose current count to an int
+        count++//set new count
+        $counter.text(" " + count);//set new count
+        alreadyLiked = true;
+        console.log("already liked" + alreadyLiked);
+        $(this).removeClass("like-button")
+        $(this).addClass("unliked")
+
+        var sentData = {
+            votes: count
+        }
+
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log("Affected Rows:" + data)
+        })
+    })
+
+    $("#cardHolder").on("click", ".unliked", function (e) {
+        var $counter = $(this).find(".count");
+        var id = $(this).attr("data-id")
+        var count = $counter.text() || 0; //corose current count to an int
+        count--
+        $counter.text(" " + count);//remove 1
+        alreadyLiked = false;
+        console.log("already liked should be false =" + alreadyLiked);
+        $(this).removeClass("unliked")
+        $(this).addClass("like-button")
+
+        var sentData = {
+            votes: count
+        }
+
+        $.post("/api/user/votes/" + id, sentData, function (data) {
+            console.log("Affected Rows:" + data)
+        })
     })
 })
