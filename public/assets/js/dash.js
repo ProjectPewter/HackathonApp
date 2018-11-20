@@ -82,10 +82,13 @@ $(document).ready(function () {
             $.post("/api/ideas", newIdea, function (data) {
                 console.log(data)
             })
+            $.post('/api/user/own/', newIdea, function (data) {
+                console.log(data)
+            })
             console.log("click");
             $("#submitModal").hide();
             // $("#successModal").hide();
-            $("#successModal").show();
+            // $("#successModal").modal();
 
             $(".modal-backdrop").hide();
         } else {

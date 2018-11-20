@@ -11,11 +11,11 @@ router.get('/api/ideas', function (req, res) {
   })
 })
 
-router.get("/users/:id", function(req, res) {
+router.get("/users/:id", function (req, res) {
   connection.query("SELECT id, username, email FROM users WHERE ?",
-   {id: req.session.passport.user.user_id}, function(err, result) {
-     res.json(result)
-  })
+    { id: req.session.passport.user.user_id }, function (err, result) {
+      res.json(result)
+    })
 })
 
 
@@ -65,28 +65,83 @@ router.get('/api/ideas/difficulty/:difficulty', function (req, res) {
 
 
 router.post('/api/ideas', function (req, res) {
-  var projectName = req.body.ideaName
-  var projectDetails = req.body.details
-  var projectTech = req.body.tech
-  var projectDiff = req.body.difficulty
-  connection.query("INSERT INTO ideas SET ?",
-    {
-      name: projectName,
-      details: projectDetails,
-      tech: projectTech,
-      difficulty: projectDiff
-    },
-    function (err, result) {
-      if (err) throw err
+  if (req.isAuthenticated()) {
+    var projectName = req.body.ideaName
+    var projectDetails = req.body.details
+    var projectTech = req.body.tech
+    var projectDiff = req.body.difficulty
+    connection.query("INSERT INTO ideas SET ?",
+      {
+        name: projectName,
+        details: projectDetails,
+        tech: projectTech,
+        difficulty: projectDiff
+      },
+      function (err, result) {
+        if (err) throw err
 
-      console.log(result.affectedRows)
-    })
+        res.json(result.affectedRows)
+      })  
+  } else {
+    console.log("Not Logged In")
+    res.end()
+  }
 })
+
+router.post('/api/user/own/', function (req, res) {
+  if (req.isAuthenticated()) {
+    connection.query("INSERT INTO own SET ?", {
+      id: req.session.passport.user.user_id,
+      idea: req.body.ideaName
+    }, function (err, result) {
+      if (err) throw err
+    
+      res.json(result.affectedRows)
+    })
+  } else {
+    console.log("Not Logged In")
+    res.end()
+  }
+})
+
 
 router.get('/api/user/pinned', function (req, res) {
   if (req.isAuthenticated()) {
     // console.log(req.session.passport.user.user_id)
-    connection.query("SELECT * FROM pinned WHERE ?", {
+    connection.query("SELECT DISTINCT pin FROM pinned WHERE ?", {
+      id: req.session.passport.user.user_id
+    }, function (err, result) {
+      if (err) throw err
+
+      res.json(result)
+    })
+  } else {
+    console.log("Not Logged In")
+    res.end()
+  }
+})
+
+router.get('/api/user/voted/:id', function (req, res) {
+  if (req.isAuthenticated()) {
+    // console.log(req.session.passport.user.user_id)
+    connection.query("SELECT DISTINCT * FROM voted WHERE ?", {
+      id: req.session.passport.user.user_id,
+      // vote: req.params.id
+    }, function (err, result) {
+      if (err) throw err
+
+      res.json(result)
+    })
+  } else {
+    console.log("Not Logged In")
+    res.end()
+  }
+})
+
+router.get('/api/user/own', function (req, res) {
+  if (req.isAuthenticated()) {
+    // console.log(req.session.passport.user.user_id)
+    connection.query("SELECT DISTINCT idea FROM own WHERE ?", {
       id: req.session.passport.user.user_id
     }, function (err, result) {
       if (err) throw err

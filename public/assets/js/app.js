@@ -104,14 +104,22 @@ var makeCard = function (idea) {
         .text(idea.name)
 
     desc.text(idea.details)
-
     //liking functionality 
     var likeButton = $("<button>")
     likeButton.addClass("like-button btn-default btn-sm")
-        .attr("data-id", idea.id)
-        .append('<i class="fas fa-thumbs-up"></i>')
-        .append('<span class="count"> ' + idea.votes + '</span>')
+    .attr("data-id", idea.id)
+    .append('<i class="fas fa-thumbs-up"></i>')
+    .append('<span class="count"> ' + idea.votes + '</span>')
+    
+    // $.get('/api/user/voted/' + idea.id, function (data) {
 
+    //     if (!data || !data.length) {
+    //         likeButton.addClass("like-button")
+    //     }
+    //     else {
+    //         likeButton.addClass("unliked")
+    //     }
+    // })
 
     cardDiv.append(head)
         .append(desc)

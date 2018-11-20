@@ -27,3 +27,13 @@ CREATE TABLE pinned (
   id INT,
   pin int
 );
+
+CREATE TABLE voted (
+  id INT,
+  vote INT
+);
+
+CREATE TABLE own (
+  id INT,
+  idea VARCHAR(50)
+);
