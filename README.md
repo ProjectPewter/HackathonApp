@@ -27,4 +27,9 @@ After the PORT environment variable has been set, run the Node.js application wi
 The application will now be running locally on PORT 8080.
 
 # Screenshots
+![Homepage](/assets/images/homepage.png)
+![Login](/assets/images/login.png)
+![Dashboard](/assets/images/dashboard.png)
 
+# Demo
+Heroku link: 
