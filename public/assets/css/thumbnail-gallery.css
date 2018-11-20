@@ -15,6 +15,16 @@ body {
   }
 }
 
+.like-button {
+  background-color: #263c5a;
+  color: white;
+  float: right;
+}
+.unliked {
+  background-color: #263c5a;
+  color: white;
+  float: right;
+}
 .container {
   padding-right: 5px;
   padding-left: 5px
@@ -276,4 +286,43 @@ border-bottom: 1px solid #ddd;
 
 .level {
   text-align: left;
+}
+
+.form-group {
+  font-family: 'Share Tech Mono', monospace;
+
+}
+
+.reg-form {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+  padding: 15px;
+  background: #263c5a;
+  color: white
+}
+
+.headline {
+  text-align: center;
+  color: greenyellow
+}
+
+.reg-input {
+  margin-bottom: 8px
+}
+
+.reg-btn {
+  color:white;
+  background: darkgray
+}
+
+.modal-body {
+  font-family: 'Share Tech Mono', monospace;
+
+}
+
+#proj-name {
+  font-size: 18px;
+  font-weight: bold
 }

@@ -1,41 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-    <title>Document</title>
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P|Share+Tech+Mono" rel="stylesheet">
+    <link href="assets/css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <title>Registration</title>
 </head>
+
 <body>
-    <form class="form-group" action="/register" method="POST">
-        <h1>Register for the site</h1>
-        <form action="/register" method="POST">
-        
-            <div>
-                <label for="username">UserName</label>
-                <input type="text" name="username" placeholder="username">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Hackathon Generator</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="document.getElementById('id01').style.display='block'">Login</a>
+                    </li>
+                </ul>
             </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="email" name="email" placeholder="Email@Email.com">
-            </div>
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" placeholder="password">
-            </div>
-            <div>
-                <label for="passwordMatch">Confirm Password</label>
-                <input type="password" name="passwordMatch" placeholder="Confirm Password">
-            </div>
-            <div>
-                <button type="submit">Submit button</button>
-            </div>
+        </div>
+    </nav>
+    <div>
+        <form class="form-group" action="/register" method="POST">
+            <form action="/register" method="POST">
+                <div class="reg-form">
+                    <h1 class="headline">Register for the site</h1>
+                    <div>
+                        <label for="username">UserName</label>
+                        <br>
+                        <input class="reg-input" type="text" name="username" placeholder="username">
+                    </div>
+                    <div>
+                        <label for="email">Email</label>
+                        <br>
+                        <input class="reg-input" type="email" name="email" placeholder="email@email.com">
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <br>
+                        <input class="reg-input" type="password" name="password" placeholder="password">
+                    </div>
+                    <div>
+                        <label for="passwordMatch">Confirm Password</label>
+                        <br>
+                        <input class="reg-input" type="password" name="passwordMatch" placeholder="confirm password">
+                    </div>
+                    <br>
+                    <div>
+                        <button class="reg-btn" type="submit">Submit button</button>
+                    </div>
+                </div>
+            </form>
         </form>
-    
-    
-    </form>
+    </div>
+
+    <!-- Footer -->
+  <footer class="py-4">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Hackathon Idea Generator 2018</p>
+    </div>
+    <!-- /.container -->
+  </footer>
 
 </body>
+
 </html>
