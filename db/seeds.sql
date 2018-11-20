@@ -1,4 +1,4 @@
-USE users_db;
+USE hackathon_db;
 
 INSERT INTO ideas (name, details, tech, difficulty)
 VALUES ("Find a Pal!", "Helps you to find a pal in these tough times.", "HTML, CSS, JavaScript", 2);
