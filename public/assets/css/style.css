@@ -16,6 +16,17 @@
   height: 50%;
 }
 
+footer {
+  position: auto;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #263c5a;
+  background-size: auto;
+  color: white;
+  text-align: center;
+}
+
 /* Modal Content/Box */
 .modal-content2 {
   background-color: #fefefe;

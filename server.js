@@ -22,11 +22,18 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 
 let options = {
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "hackathon_db"
+  host:"kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+  user: "hiuio7hibn9dzrcp",
+  password: "ekgb28lxscrd3ygm",
+  database: "apbi73k9uh5xvs1g"
 }
+
+// let options = {
+//   host: "localhost",
+//   user: "root",
+//   password: "root",
+//   database: "users_db"
+// }
 
 var sessionStore = new MySQLStore(options);
 

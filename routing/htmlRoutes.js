@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
     console.log(req.user)
     console.log(req.isAuthenticated())
     if (req.isAuthenticated()) {
-        res.sendFile(path.join(__dirname, "../public/home.html"))
+        res.sendFile(path.join(__dirname, "../public/success.html"))
         console.log(req.session.passport.user.user_id)
     } else {
         res.sendFile(path.join(__dirname, "../public/home.html"))
@@ -21,8 +21,11 @@ router.get("/", function(req, res) {
 })
 
 router.get("/dashboard", function(req, res) {
-  
-  res.sendFile(path.join(__dirname, "../public/dash.html"))
+  if(req.isAuthenticated()) {
+    res.sendFile(path.join(__dirname, "../public/dash.html"))
+  } else {
+      res.sendFile(path.join(__dirname, "../public/register.html"))
+  }
 })
 
 router.post("/login", passport.authenticate(
@@ -44,8 +47,10 @@ router.post("/login", passport.authenticate(
 
 router.get("/logout", function(req, res) {
     req.logout()
-    req.session.destroy()
-    req.redirect("/")
+    req.session.destroy(function() {
+        res.clearCookie("connect.sid")
+        res.redirect("/")
+    })
 })
 
 router.get("/register", function(req, res) {

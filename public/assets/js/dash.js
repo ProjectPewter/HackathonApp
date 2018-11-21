@@ -168,6 +168,16 @@ $(document).ready(function () {
     });
 })
 
+$(document).ready(function() {
+    function updateUserDisplay() {
+        $.get("/users/id", function(data) {
+            id = data[0].id
+            $("#profileName").text(data[0].username)
+        })
+    }
+    updateUserDisplay()
+})
+
 var availableTags = [
     "4th Dimension",
     "ABAP",
