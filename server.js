@@ -22,23 +22,16 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 
 let options = {
-  host:"kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "hiuio7hibn9dzrcp",
-  password: "ekgb28lxscrd3ygm",
-  database: "apbi73k9uh5xvs1g"
+  host: process.env.OPTIONS_HOST,
+  user: process.env.OPTIONS_USER,
+  password: process.env.OPTIONS_PW,
+  database: process.env.OPTIONS_DB
 }
-
-// let options = {
-//   host: "localhost",
-//   user: "root",
-//   password: "root",
-//   database: "users_db"
-// }
 
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
-  secret: 'hsudhihsduiuh',
+  secret: process.env.PW_SECRET,
   resave: false,
   store: sessionStore,
   saveUninitialized: false,
