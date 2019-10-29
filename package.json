@@ -1,7 +1,7 @@
 {
   "name": "hackathonapp",
   "version": "1.0.0",
-  "engine": {
+  "engines": {
     "node": "10.13.0"
   },
   "description": "ideas for a hackathon!",
