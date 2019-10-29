@@ -26,7 +26,8 @@ let options = {
   host: process.env.OPTIONS_HOST,
   user: process.env.OPTIONS_USER,
   password: process.env.OPTIONS_PW,
-  database: process.env.OPTIONS_DB
+  database: process.env.OPTIONS_DB,
+  secret: process.env.OPTIONS_SECRET
 }
 
 var sessionStore = new MySQLStore(options);
@@ -36,7 +37,7 @@ app.use(session({
   resave: false,
   store: sessionStore,
   saveUninitialized: false,
-  // cookie: { secure: true }
+  cookie: { secure: true }
 }))
 
 app.use(passport.initialize());
