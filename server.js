@@ -31,7 +31,7 @@ let options = {
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
-  secret: process.env.PW_SECRET,
+  secret: "imomoiinyubtytrerexgfcbv",
   resave: false,
   store: sessionStore,
   saveUninitialized: false,
