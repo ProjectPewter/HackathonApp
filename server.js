@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser")
 var html = require("./routing/htmlRoutes")
 var api = require("./routing/apiRoutes")
 var path = require("path")
+require("dotenv").config()
 
 // Authentication Routes
 const session = require("express-session")
@@ -31,7 +32,7 @@ let options = {
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
-  secret: "imomoiinyubtytrerexgfcbv",
+  secret: process.env.PW_SECRET,
   resave: false,
   store: sessionStore,
   saveUninitialized: false,
